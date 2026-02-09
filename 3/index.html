@@ -1,0 +1,1942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Native Command Consulting &mdash; Revenue Cycle Management for Tribal Health</title>
+<meta name="description" content="Native Command Consulting: 100% Native American-owned consulting firm specializing in Revenue Cycle Management for IHS and tribal health care facilities since 2013.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+<style>
+/* ============================================
+   RESET & FOUNDATIONS
+   ============================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --off-white: #FAFAF7;
+  --jet: #111111;
+  --burnt-orange: #D4622B;
+  --warm-gray: #6B6B6B;
+  --divider: #E0DDD5;
+  --serif: 'Libre Baskerville', 'Georgia', serif;
+  --sans: 'Instrument Sans', 'Helvetica Neue', Arial, sans-serif;
+  --max-width: 1280px;
+  --gutter: 24px;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--sans);
+  background-color: var(--off-white);
+  color: var(--jet);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+::selection {
+  background-color: var(--burnt-orange);
+  color: var(--off-white);
+}
+
+/* ============================================
+   UTILITY
+   ============================================ */
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ============================================
+   SCROLL REVEAL ANIMATIONS
+   ============================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+.reveal-delay-5 { transition-delay: 0.5s; }
+
+/* ============================================
+   NAVIGATION / MASTHEAD
+   ============================================ */
+.masthead {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: var(--off-white);
+  border-top: 2px solid var(--jet);
+  border-bottom: 1px solid var(--divider);
+  transition: box-shadow 0.3s ease, border-bottom-color 0.3s ease;
+}
+
+.masthead.scrolled {
+  border-bottom-color: var(--jet);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.03);
+}
+
+.masthead-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+
+.masthead-logo {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.masthead-logo .accent {
+  color: var(--burnt-orange);
+}
+
+.masthead-nav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.masthead-nav a {
+  font-family: var(--sans);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--warm-gray);
+  transition: color 0.25s ease;
+  position: relative;
+}
+
+.masthead-nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: var(--burnt-orange);
+  transition: width 0.3s ease;
+}
+
+.masthead-nav a:hover,
+.masthead-nav a.active {
+  color: var(--jet);
+}
+
+.masthead-nav a:hover::after,
+.masthead-nav a.active::after {
+  width: 100%;
+}
+
+.masthead-cta {
+  font-family: var(--sans);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--off-white) !important;
+  background-color: var(--jet);
+  padding: 10px 24px;
+  transition: background-color 0.3s ease;
+}
+
+.masthead-cta:hover {
+  background-color: var(--burnt-orange);
+}
+
+.masthead-cta::after {
+  display: none !important;
+}
+
+/* Mobile menu toggle */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.menu-toggle span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background-color: var(--jet);
+  position: absolute;
+  left: 5px;
+  transition: all 0.3s ease;
+}
+
+.menu-toggle span:nth-child(1) { top: 9px; }
+.menu-toggle span:nth-child(2) { top: 15px; }
+.menu-toggle span:nth-child(3) { top: 21px; }
+
+.menu-toggle.active span:nth-child(1) {
+  top: 15px;
+  transform: rotate(45deg);
+}
+
+.menu-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle.active span:nth-child(3) {
+  top: 15px;
+  transform: rotate(-45deg);
+}
+
+/* ============================================
+   HERO
+   ============================================ */
+.hero {
+  padding-top: 64px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+.hero-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 80px var(--gutter) 60px;
+  width: 100%;
+}
+
+.hero-overline {
+  font-family: var(--sans);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--burnt-orange);
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.hero-overline::before {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 1px;
+  background-color: var(--burnt-orange);
+}
+
+.hero-headline {
+  font-family: var(--serif);
+  font-size: clamp(3rem, 7vw, 6.5rem);
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  color: var(--jet);
+  max-width: 1100px;
+  margin-bottom: 40px;
+}
+
+.hero-headline .orange {
+  color: var(--burnt-orange);
+}
+
+.hero-rule {
+  width: 100%;
+  height: 1px;
+  background-color: var(--jet);
+  margin-bottom: 40px;
+}
+
+.hero-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 40px;
+}
+
+.hero-description {
+  font-family: var(--sans);
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: var(--warm-gray);
+  max-width: 520px;
+}
+
+.hero-scroll-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.hero-scroll-indicator span {
+  font-family: var(--sans);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--warm-gray);
+  writing-mode: vertical-rl;
+}
+
+.scroll-line {
+  width: 1px;
+  height: 48px;
+  background-color: var(--divider);
+  position: relative;
+  overflow: hidden;
+}
+
+.scroll-line::after {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--burnt-orange);
+  animation: scrollDown 2s ease-in-out infinite;
+}
+
+@keyframes scrollDown {
+  0% { top: -100%; }
+  50% { top: 100%; }
+  100% { top: 100%; }
+}
+
+/* ============================================
+   SECTION COMMON
+   ============================================ */
+.section {
+  padding: 100px 0;
+  position: relative;
+}
+
+.section-top-rule {
+  width: 100%;
+  height: 1px;
+  background-color: var(--divider);
+}
+
+.section-header {
+  margin-bottom: 64px;
+}
+
+.section-number {
+  font-family: var(--serif);
+  font-size: 0.875rem;
+  color: var(--warm-gray);
+  margin-bottom: 12px;
+  display: block;
+}
+
+.section-label {
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--burnt-orange);
+  margin-bottom: 20px;
+}
+
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--jet);
+}
+
+.section-title .orange {
+  color: var(--burnt-orange);
+}
+
+/* ============================================
+   ABOUT
+   ============================================ */
+.about {
+  padding: 100px 0 80px;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.about-left .section-label {
+  margin-bottom: 24px;
+}
+
+.about-title {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 3.5vw, 2.75rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  margin-bottom: 40px;
+}
+
+.pull-quote {
+  font-family: var(--serif);
+  font-size: clamp(1.25rem, 2vw, 1.625rem);
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--jet);
+  padding: 32px 0;
+  border-top: 1px solid var(--divider);
+  border-bottom: 1px solid var(--divider);
+  position: relative;
+}
+
+.pull-quote .quote-mark {
+  color: var(--burnt-orange);
+  font-size: 1.3em;
+}
+
+.about-body {
+  padding-top: 8px;
+}
+
+.about-body p:first-of-type::first-letter {
+  font-family: var(--serif);
+  font-size: 4em;
+  float: left;
+  line-height: 0.8;
+  margin-right: 8px;
+  margin-top: 6px;
+  color: var(--jet);
+  font-weight: 700;
+}
+
+.about-body p {
+  font-family: var(--sans);
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--warm-gray);
+  margin-bottom: 20px;
+}
+
+.about-body p strong {
+  color: var(--jet);
+  font-weight: 600;
+}
+
+.about-established {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+  padding: 12px 0;
+  border-top: 1px solid var(--divider);
+}
+
+.about-established .year {
+  font-family: var(--serif);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--burnt-orange);
+  line-height: 1;
+}
+
+.about-established .label {
+  font-family: var(--sans);
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--warm-gray);
+  line-height: 1.4;
+}
+
+/* ============================================
+   STATS STRIP
+   ============================================ */
+.stats-strip {
+  border-top: 1px solid var(--jet);
+  border-bottom: 1px solid var(--jet);
+  padding: 48px 0;
+  background-color: var(--off-white);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 0 24px;
+  border-right: 1px solid var(--divider);
+}
+
+.stat-item:last-child {
+  border-right: none;
+}
+
+.stat-number {
+  font-family: var(--serif);
+  font-size: clamp(2.5rem, 4.5vw, 4rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--jet);
+  margin-bottom: 8px;
+}
+
+.stat-number .orange {
+  color: var(--burnt-orange);
+}
+
+.stat-label {
+  font-family: var(--sans);
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--warm-gray);
+  line-height: 1.5;
+}
+
+/* ============================================
+   SERVICES
+   ============================================ */
+.services {
+  padding: 100px 0 80px;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--jet);
+}
+
+.service-card {
+  padding: 40px 28px 40px 28px;
+  border-right: 1px solid var(--divider);
+  border-bottom: 1px solid var(--divider);
+  position: relative;
+  cursor: default;
+  transition: background-color 0.4s ease;
+}
+
+.service-card:last-child {
+  border-right: none;
+}
+
+.service-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background-color: var(--burnt-orange);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.service-card:hover::before {
+  transform: scaleX(1);
+}
+
+.service-card:hover {
+  background-color: #F5F4EF;
+}
+
+.service-number {
+  font-family: var(--serif);
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--divider);
+  line-height: 1;
+  margin-bottom: 28px;
+  transition: color 0.4s ease;
+}
+
+.service-card:hover .service-number {
+  color: var(--burnt-orange);
+}
+
+.service-title {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 16px;
+  color: var(--jet);
+}
+
+.service-desc {
+  font-family: var(--sans);
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--warm-gray);
+  margin-bottom: 24px;
+}
+
+.service-detail {
+  font-family: var(--sans);
+  font-size: 0.8125rem;
+  line-height: 1.65;
+  color: var(--warm-gray);
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.5s ease, opacity 0.4s ease, margin 0.4s ease;
+  border-top: 1px solid transparent;
+  padding-top: 0;
+}
+
+.service-card:hover .service-detail {
+  max-height: 200px;
+  opacity: 1;
+  border-top-color: var(--divider);
+  padding-top: 16px;
+  margin-top: 0;
+}
+
+.service-read-more {
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--burnt-orange);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: gap 0.3s ease;
+}
+
+.service-card:hover .service-read-more {
+  gap: 10px;
+}
+
+.service-read-more svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.3s ease;
+}
+
+.service-card:hover .service-read-more svg {
+  transform: translateX(2px);
+}
+
+/* ============================================
+   WHY CHOOSE US
+   ============================================ */
+.why-choose {
+  padding: 100px 0;
+  background-color: var(--jet);
+  color: var(--off-white);
+}
+
+.why-choose .section-label {
+  color: var(--burnt-orange);
+}
+
+.why-choose .section-title {
+  color: var(--off-white);
+  margin-bottom: 72px;
+}
+
+.differentiators {
+  display: grid;
+  gap: 0;
+}
+
+.diff-item {
+  display: grid;
+  grid-template-columns: 120px 1fr 1fr;
+  gap: 40px;
+  padding: 36px 0;
+  border-top: 1px solid rgba(255,255,255,0.12);
+  align-items: start;
+  transition: border-color 0.3s ease;
+}
+
+.diff-item:last-child {
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+
+.diff-item:hover {
+  border-top-color: var(--burnt-orange);
+}
+
+.diff-number {
+  font-family: var(--serif);
+  font-size: 1rem;
+  color: var(--burnt-orange);
+}
+
+.diff-title {
+  font-family: var(--serif);
+  font-size: 1.375rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--off-white);
+}
+
+.diff-desc {
+  font-family: var(--sans);
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.55);
+}
+
+/* ============================================
+   PORTFOLIO / CLIENTS
+   ============================================ */
+.portfolio {
+  padding: 100px 0 80px;
+}
+
+.portfolio-table {
+  width: 100%;
+  border-top: 2px solid var(--jet);
+}
+
+.portfolio-row {
+  display: grid;
+  grid-template-columns: 40px 1fr 1fr auto;
+  gap: 24px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--divider);
+  align-items: center;
+  transition: background-color 0.3s ease, padding 0.3s ease;
+  cursor: default;
+}
+
+.portfolio-row:hover {
+  background-color: #F5F4EF;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.portfolio-row:hover .port-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.port-index {
+  font-family: var(--serif);
+  font-size: 0.875rem;
+  color: var(--warm-gray);
+}
+
+.port-name {
+  font-family: var(--serif);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: var(--jet);
+}
+
+.port-location {
+  font-family: var(--sans);
+  font-size: 0.9375rem;
+  color: var(--warm-gray);
+}
+
+.port-arrow {
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: all 0.3s ease;
+  color: var(--burnt-orange);
+}
+
+.port-arrow svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ============================================
+   CONTACT
+   ============================================ */
+.contact {
+  padding: 100px 0;
+  background-color: var(--jet);
+  color: var(--off-white);
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.contact .section-label {
+  color: var(--burnt-orange);
+}
+
+.contact .section-title {
+  color: var(--off-white);
+  margin-bottom: 32px;
+}
+
+.contact-intro {
+  font-family: var(--sans);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 40px;
+}
+
+.contact-details {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.contact-detail-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.contact-detail-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.contact-icon {
+  width: 20px;
+  height: 20px;
+  color: var(--burnt-orange);
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.contact-detail-label {
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 4px;
+}
+
+.contact-detail-value {
+  font-family: var(--sans);
+  font-size: 1rem;
+  color: var(--off-white);
+  line-height: 1.5;
+}
+
+.contact-detail-value a {
+  transition: color 0.25s ease;
+}
+
+.contact-detail-value a:hover {
+  color: var(--burnt-orange);
+}
+
+/* Contact Form */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.form-group {
+  position: relative;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+
+.form-row .form-group:first-child {
+  border-right: 1px solid rgba(255,255,255,0.12);
+  padding-right: 24px;
+}
+
+.form-row .form-group:last-child {
+  padding-left: 24px;
+}
+
+.form-group label {
+  font-family: var(--sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  display: block;
+  padding-top: 20px;
+  margin-bottom: 4px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  font-family: var(--sans);
+  font-size: 1rem;
+  color: var(--off-white);
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 4px 0 20px;
+  resize: none;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: rgba(255,255,255,0.2);
+}
+
+.form-group select {
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.form-group select option {
+  background-color: var(--jet);
+  color: var(--off-white);
+}
+
+.form-group textarea {
+  min-height: 100px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-bottom-color: var(--burnt-orange);
+}
+
+.form-group:has(input:focus),
+.form-group:has(textarea:focus),
+.form-group:has(select:focus) {
+  border-bottom-color: var(--burnt-orange);
+}
+
+.form-submit {
+  margin-top: 32px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.btn-submit {
+  font-family: var(--sans);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--jet);
+  background-color: var(--off-white);
+  border: none;
+  padding: 18px 48px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-submit:hover {
+  background-color: var(--burnt-orange);
+  color: var(--off-white);
+}
+
+.btn-submit svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.3s ease;
+}
+
+.btn-submit:hover svg {
+  transform: translateX(4px);
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.footer {
+  padding: 64px 0 40px;
+  border-top: 1px solid var(--divider);
+  background-color: var(--off-white);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  gap: 48px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid var(--divider);
+}
+
+.footer-brand-name {
+  font-family: var(--serif);
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.footer-brand-name .accent {
+  color: var(--burnt-orange);
+}
+
+.footer-brand-desc {
+  font-family: var(--sans);
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: var(--warm-gray);
+  max-width: 280px;
+}
+
+.footer-col-title {
+  font-family: var(--sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--jet);
+  margin-bottom: 20px;
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-links a {
+  font-family: var(--sans);
+  font-size: 0.875rem;
+  color: var(--warm-gray);
+  transition: color 0.25s ease;
+}
+
+.footer-links a:hover {
+  color: var(--burnt-orange);
+}
+
+.footer-contact-line {
+  font-family: var(--sans);
+  font-size: 0.875rem;
+  color: var(--warm-gray);
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+
+.footer-contact-line a {
+  transition: color 0.25s ease;
+}
+
+.footer-contact-line a:hover {
+  color: var(--burnt-orange);
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 24px;
+}
+
+.footer-copyright {
+  font-family: var(--sans);
+  font-size: 0.8125rem;
+  color: var(--warm-gray);
+}
+
+.footer-bottom-links {
+  display: flex;
+  gap: 24px;
+}
+
+.footer-bottom-links a {
+  font-family: var(--sans);
+  font-size: 0.8125rem;
+  color: var(--warm-gray);
+  transition: color 0.25s ease;
+}
+
+.footer-bottom-links a:hover {
+  color: var(--burnt-orange);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 1024px) {
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .service-card:nth-child(2) {
+    border-right: none;
+  }
+
+  .service-card:nth-child(3) {
+    border-right: 1px solid var(--divider);
+  }
+
+  .about-grid {
+    gap: 48px;
+  }
+
+  .diff-item {
+    grid-template-columns: 80px 1fr 1fr;
+    gap: 24px;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --gutter: 20px;
+  }
+
+  .masthead-nav {
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--off-white);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+    border-bottom: 1px solid var(--divider);
+    z-index: 999;
+  }
+
+  .masthead-nav.open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .masthead-nav a {
+    font-size: 1rem;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .hero-headline {
+    font-size: clamp(2.5rem, 9vw, 4rem);
+  }
+
+  .hero-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero-scroll-indicator {
+    display: none;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px 0;
+  }
+
+  .stat-item:nth-child(2) {
+    border-right: none;
+  }
+
+  .stat-item:nth-child(3) {
+    border-right: 1px solid var(--divider);
+  }
+
+  .stat-item:nth-child(1),
+  .stat-item:nth-child(2) {
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .stat-item:nth-child(3),
+  .stat-item:nth-child(4) {
+    padding-top: 32px;
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .service-card {
+    border-right: none !important;
+  }
+
+  .service-detail {
+    max-height: none;
+    opacity: 1;
+    padding-top: 16px;
+    border-top-color: var(--divider);
+  }
+
+  .diff-item {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 28px 0;
+  }
+
+  .diff-number {
+    font-size: 0.875rem;
+  }
+
+  .portfolio-row {
+    grid-template-columns: 32px 1fr;
+    gap: 12px;
+  }
+
+  .port-location {
+    grid-column: 2;
+    font-size: 0.8125rem;
+    margin-top: -8px;
+  }
+
+  .port-arrow {
+    display: none;
+  }
+
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .form-row .form-group:first-child {
+    border-right: none;
+    padding-right: 0;
+  }
+
+  .form-row .form-group:last-child {
+    padding-left: 0;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+
+  .section {
+    padding: 72px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-headline {
+    font-size: clamp(2rem, 10vw, 3rem);
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .stat-item {
+    border-right: none !important;
+    border-bottom: 1px solid var(--divider) !important;
+    padding: 16px 0 !important;
+  }
+
+  .stat-item:last-child {
+    border-bottom: none !important;
+  }
+
+  .section {
+    padding: 56px 0;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================
+     MASTHEAD / NAVIGATION
+     ============================================ -->
+<header class="masthead" id="masthead">
+  <div class="masthead-inner">
+    <a href="#hero" class="masthead-logo">
+      Native Command<span class="accent">.</span>
+    </a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <nav class="masthead-nav" id="mastheadNav" role="navigation">
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#why-choose">Why Us</a>
+      <a href="#portfolio">Clients</a>
+      <a href="#contact" class="masthead-cta">Get in Touch</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============================================
+     HERO
+     ============================================ -->
+<section class="hero" id="hero">
+  <div class="hero-inner">
+    <div class="hero-overline reveal">
+      <span>Est. 2013 &mdash; Pierre, South Dakota</span>
+    </div>
+    <h1 class="hero-headline reveal reveal-delay-1">
+      Transforming <span class="orange">Tribal Health</span> Through Expert Revenue Cycle Management
+    </h1>
+    <div class="hero-rule reveal reveal-delay-2"></div>
+    <div class="hero-bottom reveal reveal-delay-3">
+      <p class="hero-description">
+        100% Native American-owned-and-operated. We partner with IHS and tribal health care facilities to optimize revenue cycles, modernize operations, and ultimately improve the quality of health care for Native American communities.
+      </p>
+      <div class="hero-scroll-indicator">
+        <span>Scroll</span>
+        <div class="scroll-line"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     ABOUT
+     ============================================ -->
+<div class="section-top-rule"></div>
+<section class="about section" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-left reveal">
+        <div class="section-label">About Us</div>
+        <h2 class="about-title">A Consulting Firm Built on <span class="orange">Purpose</span>, Not Just Profit</h2>
+        <div class="pull-quote reveal reveal-delay-1">
+          <span class="quote-mark">&ldquo;</span>Our mission is to help improve the quality of health care for Native American communities through expert consulting and innovative technology.<span class="quote-mark">&rdquo;</span>
+        </div>
+        <div class="about-established reveal reveal-delay-2">
+          <span class="year">2013</span>
+          <span class="label">Year<br>Established</span>
+        </div>
+      </div>
+      <div class="about-body reveal reveal-delay-2">
+        <p>Native Command Consulting is a 100% Native American-owned-and-operated professional consulting firm based in Pierre, South Dakota. Since our founding in 2013, we have dedicated ourselves to one clear purpose: strengthening the health care infrastructure that serves Native American communities across the nation.</p>
+        <p>Our primary focus is <strong>Revenue Cycle Management</strong> for Indian Health Service (IHS) and tribal health care facilities. We understand the unique regulatory environment, the specific challenges of tribal health systems, and the critical importance of every dollar recovered in funding quality patient care.</p>
+        <p>We bring together certified coding professionals, health information management experts, and technology specialists who share a deep commitment to the communities we serve. Our team does not simply consult &mdash; we embed ourselves as partners in your mission to deliver better health outcomes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     STATS STRIP
+     ============================================ -->
+<div class="stats-strip">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item reveal">
+        <div class="stat-number">10<span class="orange">+</span></div>
+        <div class="stat-label">Years of Service</div>
+      </div>
+      <div class="stat-item reveal reveal-delay-1">
+        <div class="stat-number">24<span class="orange">/7</span></div>
+        <div class="stat-label">Operational Capability</div>
+      </div>
+      <div class="stat-item reveal reveal-delay-2">
+        <div class="stat-number">100<span class="orange">%</span></div>
+        <div class="stat-label">Native American Owned</div>
+      </div>
+      <div class="stat-item reveal reveal-delay-3">
+        <div class="stat-number">7<span class="orange">+</span></div>
+        <div class="stat-label">Major Facilities Served</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     SERVICES
+     ============================================ -->
+<section class="services section" id="services">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label">Our Services</div>
+      <h2 class="section-title">Four Pillars of <span class="orange">Operational Excellence</span></h2>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-number">01</div>
+        <h3 class="service-title">Health Information Management</h3>
+        <p class="service-desc">Comprehensive records management solutions that transition facilities from paper-based systems to modern, compliant digital workflows.</p>
+        <div class="service-detail">Expert guidance on going paperless, maintaining regulatory compliance, and building robust health information systems that support quality care delivery.</div>
+        <span class="service-read-more">
+          Learn more
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </span>
+      </div>
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-number">02</div>
+        <h3 class="service-title">Medical Coding &amp; Billing</h3>
+        <p class="service-desc">AAPC and AHIMA certified coders with 3+ years of specialized experience ensuring accurate payment capture and revenue optimization.</p>
+        <div class="service-detail">Our coders specialize in the unique requirements of IHS and tribal health facilities, maximizing reimbursement while maintaining complete coding accuracy and compliance.</div>
+        <span class="service-read-more">
+          Learn more
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </span>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-number">03</div>
+        <h3 class="service-title">Electronic Content Management</h3>
+        <p class="service-desc">Leveraging our Laserfiche partnership to deliver document automation and process automation that transforms operational efficiency.</p>
+        <div class="service-detail">From digitizing legacy records to building automated workflows, we implement enterprise content management solutions tailored to tribal health care environments.</div>
+        <span class="service-read-more">
+          Learn more
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </span>
+      </div>
+      <div class="service-card reveal reveal-delay-3">
+        <div class="service-number">04</div>
+        <h3 class="service-title">Business Process Engineering</h3>
+        <p class="service-desc">Systematic analysis and redesign of operational workflows to streamline operations, reduce costs, and increase productivity.</p>
+        <div class="service-detail">We identify bottlenecks, eliminate redundancies, and engineer processes that allow your facility to focus resources where they matter most &mdash; patient care.</div>
+        <span class="service-read-more">
+          Learn more
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     WHY CHOOSE US
+     ============================================ -->
+<section class="why-choose section" id="why-choose">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label">Why Choose Us</div>
+      <h2 class="section-title">The Native Command <span class="orange">Difference</span></h2>
+    </div>
+    <div class="differentiators">
+      <div class="diff-item reveal">
+        <span class="diff-number">01</span>
+        <h3 class="diff-title">24/7 Capability</h3>
+        <p class="diff-desc">Round-the-clock operational readiness ensures your facility never faces downtime in critical revenue cycle processes. We work when you need us.</p>
+      </div>
+      <div class="diff-item reveal reveal-delay-1">
+        <span class="diff-number">02</span>
+        <h3 class="diff-title">Innovative Technology</h3>
+        <p class="diff-desc">We deploy cutting-edge tools and systems, including our Laserfiche partnership, to bring enterprise-level technology to every facility we serve.</p>
+      </div>
+      <div class="diff-item reveal reveal-delay-1">
+        <span class="diff-number">03</span>
+        <h3 class="diff-title">Exceptional Coders</h3>
+        <p class="diff-desc">Every coder on our team holds AAPC or AHIMA certification with a minimum of three years of hands-on experience in medical coding and billing.</p>
+      </div>
+      <div class="diff-item reveal reveal-delay-2">
+        <span class="diff-number">04</span>
+        <h3 class="diff-title">Specialized Expertise</h3>
+        <p class="diff-desc">Our coders are specifically trained in IHS and tribal health care facility requirements &mdash; we understand your unique regulatory and operational landscape.</p>
+      </div>
+      <div class="diff-item reveal reveal-delay-2">
+        <span class="diff-number">05</span>
+        <h3 class="diff-title">Extremely Flexible</h3>
+        <p class="diff-desc">From short-term surge support to long-term embedded partnerships, we scale and adapt to meet the exact needs of your facility.</p>
+      </div>
+      <div class="diff-item reveal reveal-delay-3">
+        <span class="diff-number">06</span>
+        <h3 class="diff-title">Extensive Communication</h3>
+        <p class="diff-desc">Transparent, proactive reporting and regular check-ins ensure you always have complete visibility into our work and your facility&rsquo;s performance.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     PORTFOLIO / CLIENTS
+     ============================================ -->
+<div class="section-top-rule"></div>
+<section class="portfolio section" id="portfolio">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label">Service Portfolio</div>
+      <h2 class="section-title">Facilities We&rsquo;ve <span class="orange">Served</span></h2>
+    </div>
+    <div class="portfolio-table">
+      <div class="portfolio-row reveal">
+        <span class="port-index">01</span>
+        <span class="port-name">Maniilaq Health Center</span>
+        <span class="port-location">Kotzebue, Alaska</span>
+        <span class="port-arrow"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 9h10M10 5l4 4-4 4"/></svg></span>
+      </div>
+      <div class="portfolio-row reveal reveal-delay-1">
+        <span class="port-index">02</span>
+        <span class="port-name">Northern Navajo Medical Center</span>
+        <span class="port-location">Shiprock, New Mexico</span>
+        <span class="port-arrow"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 9h10M10 5l4 4-4 4"/></svg></span>
+      </div>
+      <div class="portfolio-row reveal reveal-delay-1">
+        <span class="port-index">03</span>
+        <span class="port-name">Chinle Comprehensive Health Care Facility</span>
+        <span class="port-location">Chinle, Arizona</span>
+        <span class="port-arrow"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 9h10M10 5l4 4-4 4"/></svg></span>
+      </div>
+      <div class="portfolio-row reveal reveal-delay-2">
+        <span class="port-index">04</span>
+        <span class="port-name">Crownpoint Health Care Facility</span>
+        <span class="port-location">Crownpoint, New Mexico</span>
+        <span class="port-arrow"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 9h10M10 5l4 4-4 4"/></svg></span>
+      </div>
+      <div class="portfolio-row reveal reveal-delay-2">
+        <span class="port-index">05</span>
+        <span class="port-name">Gallup Indian Medical Center</span>
+        <span class="port-location">Gallup, New Mexico</span>
+        <span class="port-arrow"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 9h10M10 5l4 4-4 4"/></svg></span>
+      </div>
+      <div class="portfolio-row reveal reveal-delay-3">
+        <span class="port-index">06</span>
+        <span class="port-name">Kayenta Health Center</span>
+        <span class="port-location">Kayenta, Arizona</span>
+        <span class="port-arrow"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 9h10M10 5l4 4-4 4"/></svg></span>
+      </div>
+      <div class="portfolio-row reveal reveal-delay-3">
+        <span class="port-index">07</span>
+        <span class="port-name">Rosebud Sioux Tribe</span>
+        <span class="port-location">Rosebud, South Dakota</span>
+        <span class="port-arrow"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 9h10M10 5l4 4-4 4"/></svg></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     CONTACT
+     ============================================ -->
+<section class="contact section" id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-left">
+        <div class="section-header reveal">
+          <div class="section-label">Contact</div>
+          <h2 class="section-title">Let&rsquo;s Start a <span class="orange">Conversation</span></h2>
+        </div>
+        <p class="contact-intro reveal reveal-delay-1">
+          Whether you need immediate coding support, a comprehensive revenue cycle assessment, or a long-term strategic partner, we are ready to listen and deliver.
+        </p>
+        <div class="contact-details reveal reveal-delay-2">
+          <div class="contact-detail-item">
+            <svg class="contact-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4.5A2.5 2.5 0 014.5 2h11A2.5 2.5 0 0118 4.5v11a2.5 2.5 0 01-2.5 2.5h-11A2.5 2.5 0 012 15.5v-11z"/><path d="M2 5l8 5.5L18 5"/></svg>
+            <div>
+              <div class="contact-detail-label">Email</div>
+              <div class="contact-detail-value"><a href="mailto:info@nativecommand.com">info@nativecommand.com</a></div>
+            </div>
+          </div>
+          <div class="contact-detail-item">
+            <svg class="contact-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5.5A2.5 2.5 0 015.5 3h1.172a1 1 0 01.894.553l1.068 2.136a1 1 0 01-.263 1.205l-.928.743a8.5 8.5 0 004.92 4.92l.743-.929a1 1 0 011.205-.262l2.136 1.068a1 1 0 01.553.894V14.5a2.5 2.5 0 01-2.5 2.5h-1C7.537 17 3 12.463 3 6.5v-1z"/></svg>
+            <div>
+              <div class="contact-detail-label">Phone</div>
+              <div class="contact-detail-value"><a href="tel:+16052224416">(605) 222-4416</a></div>
+            </div>
+          </div>
+          <div class="contact-detail-item">
+            <svg class="contact-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 11a2 2 0 100-4 2 2 0 000 4z"/><path d="M10 18s-6-5.686-6-9a6 6 0 1112 0c0 3.314-6 9-6 9z"/></svg>
+            <div>
+              <div class="contact-detail-label">Office</div>
+              <div class="contact-detail-value">122 N. Huron Ave<br>Pierre, SD 57501</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-right reveal reveal-delay-1">
+        <form class="contact-form" id="contactForm" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstName">First Name</label>
+              <input type="text" id="firstName" name="firstName" placeholder="Jane" required>
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name</label>
+              <input type="text" id="lastName" name="lastName" placeholder="Doe" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="jane@facility.org" required>
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone</label>
+              <input type="tel" id="phone" name="phone" placeholder="(555) 000-0000">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="facility">Facility / Organization</label>
+            <input type="text" id="facility" name="facility" placeholder="Your health care facility name">
+          </div>
+          <div class="form-group">
+            <label for="service">Service of Interest</label>
+            <select id="service" name="service">
+              <option value="" disabled selected>Select a service</option>
+              <option value="rcm">Revenue Cycle Management</option>
+              <option value="him">Health Information Management</option>
+              <option value="coding">Medical Coding &amp; Billing</option>
+              <option value="ecm">Electronic Content Management</option>
+              <option value="bpe">Business Process Engineering</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Tell us about your facility and how we can help..." rows="4"></textarea>
+          </div>
+          <div class="form-submit">
+            <button type="submit" class="btn-submit">
+              Send Message
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     FOOTER
+     ============================================ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-brand-name">Native Command<span class="accent">.</span></div>
+        <p class="footer-brand-desc">100% Native American-owned-and-operated professional consulting firm specializing in Revenue Cycle Management for tribal health care.</p>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Navigation</div>
+        <div class="footer-links">
+          <a href="#hero">Home</a>
+          <a href="#about">About Us</a>
+          <a href="#services">Services</a>
+          <a href="#why-choose">Why Choose Us</a>
+          <a href="#portfolio">Clients</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Services</div>
+        <div class="footer-links">
+          <a href="#services">Health Info Management</a>
+          <a href="#services">Medical Coding &amp; Billing</a>
+          <a href="#services">Electronic Content Mgmt</a>
+          <a href="#services">Business Process Eng.</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Contact</div>
+        <div class="footer-contact-line"><a href="tel:+16052224416">(605) 222-4416</a></div>
+        <div class="footer-contact-line"><a href="mailto:info@nativecommand.com">info@nativecommand.com</a></div>
+        <div class="footer-contact-line">122 N. Huron Ave<br>Pierre, SD 57501</div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copyright">&copy; 2025 Native Command Consulting. All rights reserved.</div>
+      <div class="footer-bottom-links">
+        <a href="#hero">Privacy Policy</a>
+        <a href="#hero">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================
+     JAVASCRIPT
+     ============================================ -->
+<script>
+(function() {
+  'use strict';
+
+  /* ----------------------------------------
+     SCROLL REVEAL (IntersectionObserver)
+     ---------------------------------------- */
+  const revealElements = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.12,
+    rootMargin: '0px 0px -40px 0px'
+  });
+
+  revealElements.forEach(function(el) {
+    revealObserver.observe(el);
+  });
+
+  /* ----------------------------------------
+     MASTHEAD SCROLL BEHAVIOR
+     ---------------------------------------- */
+  const masthead = document.getElementById('masthead');
+  let lastScrollY = 0;
+  let ticking = false;
+
+  function onScroll() {
+    lastScrollY = window.scrollY;
+    if (!ticking) {
+      window.requestAnimationFrame(function() {
+        if (lastScrollY > 20) {
+          masthead.classList.add('scrolled');
+        } else {
+          masthead.classList.remove('scrolled');
+        }
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  /* ----------------------------------------
+     ACTIVE NAV LINK TRACKING
+     ---------------------------------------- */
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.masthead-nav a:not(.masthead-cta)');
+
+  const sectionObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        const id = entry.target.getAttribute('id');
+        navLinks.forEach(function(link) {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + id) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }, {
+    threshold: 0.2,
+    rootMargin: '-80px 0px -50% 0px'
+  });
+
+  sections.forEach(function(section) {
+    sectionObserver.observe(section);
+  });
+
+  /* ----------------------------------------
+     SMOOTH SCROLL FOR ANCHOR LINKS
+     ---------------------------------------- */
+  document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      const targetId = this.getAttribute('href');
+      const targetEl = document.querySelector(targetId);
+      if (targetEl) {
+        const offset = 72;
+        const top = targetEl.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({
+          top: top,
+          behavior: 'smooth'
+        });
+
+        // Close mobile nav if open
+        const nav = document.getElementById('mastheadNav');
+        const toggle = document.getElementById('menuToggle');
+        if (nav.classList.contains('open')) {
+          nav.classList.remove('open');
+          toggle.classList.remove('active');
+          toggle.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        }
+      }
+    });
+  });
+
+  /* ----------------------------------------
+     MOBILE MENU TOGGLE
+     ---------------------------------------- */
+  const menuToggle = document.getElementById('menuToggle');
+  const mastheadNav = document.getElementById('mastheadNav');
+
+  menuToggle.addEventListener('click', function() {
+    const isOpen = mastheadNav.classList.contains('open');
+    mastheadNav.classList.toggle('open');
+    this.classList.toggle('active');
+    this.setAttribute('aria-expanded', String(!isOpen));
+    document.body.style.overflow = isOpen ? '' : 'hidden';
+  });
+
+  /* ----------------------------------------
+     CONTACT FORM HANDLING
+     ---------------------------------------- */
+  const contactForm = document.getElementById('contactForm');
+
+  contactForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const firstName = document.getElementById('firstName').value.trim();
+    const lastName = document.getElementById('lastName').value.trim();
+    const email = document.getElementById('email').value.trim();
+
+    if (!firstName || !lastName || !email) {
+      showFormMessage('Please fill in all required fields.', true);
+      return;
+    }
+
+    if (!isValidEmail(email)) {
+      showFormMessage('Please enter a valid email address.', true);
+      return;
+    }
+
+    const submitBtn = contactForm.querySelector('.btn-submit');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = 'Sending...';
+    submitBtn.disabled = true;
+
+    setTimeout(function() {
+      submitBtn.innerHTML = 'Message Sent';
+      submitBtn.style.backgroundColor = 'var(--burnt-orange)';
+      submitBtn.style.color = 'var(--off-white)';
+
+      setTimeout(function() {
+        contactForm.reset();
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+        submitBtn.style.backgroundColor = '';
+        submitBtn.style.color = '';
+      }, 3000);
+    }, 1200);
+  });
+
+  function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  function showFormMessage(msg, isError) {
+    let existing = contactForm.querySelector('.form-message');
+    if (existing) existing.remove();
+
+    const el = document.createElement('div');
+    el.className = 'form-message';
+    el.style.fontFamily = 'var(--sans)';
+    el.style.fontSize = '0.875rem';
+    el.style.padding = '12px 0';
+    el.style.color = isError ? '#D4622B' : 'var(--off-white)';
+    el.textContent = msg;
+    contactForm.querySelector('.form-submit').insertAdjacentElement('beforebegin', el);
+
+    setTimeout(function() {
+      el.remove();
+    }, 4000);
+  }
+
+  /* ----------------------------------------
+     KEYBOARD ACCESSIBILITY: ESC closes menu
+     ---------------------------------------- */
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && mastheadNav.classList.contains('open')) {
+      mastheadNav.classList.remove('open');
+      menuToggle.classList.remove('active');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+      menuToggle.focus();
+    }
+  });
+
+})();
+</script>
+
+</body>
+</html>

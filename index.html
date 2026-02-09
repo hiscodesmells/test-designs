@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NCC Website Redesigns</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Instrument+Serif&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'DM Sans', sans-serif; background: #0a0a0a; color: #fff; min-height: 100vh; }
+.container { max-width: 1100px; margin: 0 auto; padding: 80px 24px; }
+h1 { font-family: 'Instrument Serif', serif; font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 400; margin-bottom: 12px; }
+.subtitle { color: #888; font-size: 1.1rem; margin-bottom: 60px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+.card { border: 1px solid #222; border-radius: 12px; padding: 32px; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); position: relative; overflow: hidden; }
+.card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,255,255,0.03), transparent); pointer-events: none; }
+.card:hover { border-color: #444; transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+.card-number { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: #555; margin-bottom: 16px; }
+.card-title { font-family: 'Instrument Serif', serif; font-size: 1.6rem; font-weight: 400; margin-bottom: 8px; }
+.card-desc { color: #777; font-size: 0.9rem; line-height: 1.6; margin-bottom: 24px; }
+.card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 24px; }
+.tag { font-size: 0.7rem; padding: 4px 10px; border: 1px solid #333; border-radius: 20px; color: #999; }
+.card-link { display: inline-flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 500; color: #fff; text-decoration: none; letter-spacing: 0.05em; transition: gap 0.3s ease; }
+.card-link:hover { gap: 14px; }
+.card-link svg { width: 16px; height: 16px; }
+.elevated { border-color: #333; background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.05)); }
+.elevated .card-number { color: #e63b2e; }
+.section-label { font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: #555; margin-bottom: 24px; margin-top: 60px; display: flex; align-items: center; gap: 12px; }
+.section-label::before { content: ''; width: 30px; height: 1px; background: #333; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Native Command Consulting</h1>
+  <p class="subtitle">Website Redesign Concepts</p>
+
+  <div class="section-label">Initial Concepts</div>
+  <div class="grid">
+    <div class="card">
+      <div class="card-number">Design 01</div>
+      <div class="card-title">Earth & Heritage</div>
+      <p class="card-desc">Warm, organic, nature-inspired luxury with terracotta tones, flowing shapes, and SVG wave dividers.</p>
+      <div class="card-tags"><span class="tag">Light theme</span><span class="tag">Playfair Display</span><span class="tag">Organic</span></div>
+      <a href="1/" class="card-link">View Design <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+    <div class="card">
+      <div class="card-number">Design 03</div>
+      <div class="card-title">The Editorial</div>
+      <p class="card-desc">High-contrast magazine aesthetic with thin rules, drop caps, and surgical burnt-orange accent.</p>
+      <div class="card-tags"><span class="tag">Light theme</span><span class="tag">Libre Baskerville</span><span class="tag">Editorial</span></div>
+      <a href="3/" class="card-link">View Design <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+    <div class="card">
+      <div class="card-number">Design 05</div>
+      <div class="card-title">Bold Command</div>
+      <p class="card-desc">Contemporary brutalist with massive typography, custom cursor, vivid coral accent, and raw confidence.</p>
+      <div class="card-tags"><span class="tag">Light theme</span><span class="tag">Bricolage Grotesque</span><span class="tag">Brutalist</span></div>
+      <a href="5/" class="card-link">View Design <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+  </div>
+
+  <div class="section-label">Elevated Versions</div>
+  <div class="grid">
+    <div class="card elevated">
+      <div class="card-number">Design 1.1</div>
+      <div class="card-title">Terra</div>
+      <p class="card-desc">Cinematic scroll experience with smooth scroll engine, magnetic buttons, horizontal portfolio, split-text animations, and parallax depth.</p>
+      <div class="card-tags"><span class="tag">Smooth scroll</span><span class="tag">DM Serif Display</span><span class="tag">Cinematic</span></div>
+      <a href="1.1/" class="card-link">View Design <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+    <div class="card elevated">
+      <div class="card-number">Design 3.1</div>
+      <div class="card-title">The Broadsheet</div>
+      <p class="card-desc">Ultra-sophisticated editorial with scroll-linked headline scaling, sticky layouts, velocity-coupled marquee, and kinetic typography.</p>
+      <div class="card-tags"><span class="tag">Fraunces</span><span class="tag">Scroll-linked</span><span class="tag">Kinetic type</span></div>
+      <a href="3.1/" class="card-link">View Design <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+    <div class="card elevated">
+      <div class="card-number">Design 5.1</div>
+      <div class="card-title">Commandline</div>
+      <p class="card-desc">Hyper-bold with kinetic hero, scroll-speed element stretching, text scramble effects, 3D tilt cards, and dramatic section transitions.</p>
+      <div class="card-tags"><span class="tag">Instrument Serif</span><span class="tag">Kinetic</span><span class="tag">3D tilt</span></div>
+      <a href="5.1/" class="card-link">View Design <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+  </div>
+</div>
+</body>
+</html>

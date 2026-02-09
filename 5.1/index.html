@@ -1,0 +1,2297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Native Command Consulting | Revenue Cycle Management</title>
+<meta name="description" content="100% Native American-owned-and-operated professional consulting services. Revenue Cycle Management for IHS and tribal health care facilities since 2013.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+/* ========================================================================
+   RESET & FOUNDATION
+   ======================================================================== */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --white: #FFFFFF;
+  --black: #000000;
+  --accent: #E63B2E;
+  --gray: #ABABAB;
+  --light-bg: #F0F0F0;
+  --dark-text: #333333;
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-body: 'Epilogue', 'Helvetica Neue', Arial, sans-serif;
+  --mono: 'Courier New', Courier, monospace;
+}
+
+html {
+  scroll-behavior: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) var(--black);
+  cursor: none;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--white);
+  color: var(--black);
+  overflow-x: hidden;
+  cursor: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a, button, input, textarea {
+  cursor: none;
+}
+
+/* ========================================================================
+   CUSTOM CURSOR
+   ======================================================================== */
+.cursor {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--accent);
+  pointer-events: none;
+  z-index: 100000;
+  mix-blend-mode: difference;
+  transition: width 0.3s cubic-bezier(0.23, 1, 0.32, 1),
+              height 0.3s cubic-bezier(0.23, 1, 0.32, 1),
+              margin 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  margin-left: -10px;
+  margin-top: -10px;
+  will-change: transform;
+}
+
+.cursor.expanded {
+  width: 50px;
+  height: 50px;
+  margin-left: -25px;
+  margin-top: -25px;
+}
+
+/* ========================================================================
+   PROGRESS BAR
+   ======================================================================== */
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--accent);
+  z-index: 99999;
+  transform-origin: left;
+  transform: scaleX(0);
+  width: 100%;
+  will-change: transform;
+}
+
+/* ========================================================================
+   LOADING SCREEN
+   ======================================================================== */
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 99998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: all;
+}
+
+.loader-top,
+.loader-bottom {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: var(--black);
+  transition: transform 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.loader-top {
+  top: 0;
+  transform-origin: top;
+}
+
+.loader-bottom {
+  bottom: 0;
+  transform-origin: bottom;
+}
+
+.loader.done .loader-top {
+  transform: translateY(-100%);
+}
+
+.loader.done .loader-bottom {
+  transform: translateY(100%);
+}
+
+.loader.hidden {
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.loader-line {
+  position: relative;
+  z-index: 2;
+  width: 0;
+  height: 3px;
+  background: var(--accent);
+  transition: width 1.2s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.loader-line.animate {
+  width: 30vw;
+}
+
+/* ========================================================================
+   NAVIGATION
+   ======================================================================== */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+  padding: 1.5rem 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  mix-blend-mode: difference;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.nav.visible {
+  opacity: 1;
+}
+
+.nav-logo {
+  font-family: var(--font-body);
+  font-weight: 900;
+  font-size: 1rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--white);
+  text-decoration: none;
+}
+
+.nav-logo span {
+  color: var(--accent);
+}
+
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--white);
+  text-decoration: none;
+  position: relative;
+  padding: 0.25rem 0;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent);
+  transition: width 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+.nav-burger {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  z-index: 10001;
+}
+
+.nav-burger span {
+  display: block;
+  width: 28px;
+  height: 2px;
+  background: var(--white);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.nav-burger.active span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.nav-burger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-burger.active span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: var(--black);
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+.mobile-menu.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.mobile-menu a {
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  color: var(--white);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition: color 0.3s ease;
+}
+
+.mobile-menu a:hover {
+  color: var(--accent);
+}
+
+/* ========================================================================
+   HERO SECTION
+   ======================================================================== */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 700px;
+  background: var(--black);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0 clamp(2rem, 6vw, 6rem);
+  overflow: hidden;
+}
+
+.hero-typography {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-line {
+  overflow: hidden;
+  position: relative;
+}
+
+.hero-word {
+  font-family: var(--font-body);
+  font-weight: 900;
+  font-size: clamp(4.5rem, 15vw, 14rem);
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: var(--white);
+  display: flex;
+}
+
+.hero-word.command-word {
+  animation: commandPulse 8s ease-in-out infinite;
+}
+
+@keyframes commandPulse {
+  0%, 100% { color: var(--white); }
+  40% { color: var(--accent); }
+  60% { color: var(--accent); }
+}
+
+.hero-char {
+  display: inline-block;
+  transform: translateY(120%) rotate(8deg);
+  opacity: 0;
+  transition: transform 0.8s cubic-bezier(0.76, 0, 0.24, 1),
+              opacity 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.hero-char.revealed {
+  transform: translateY(0) rotate(0deg);
+  opacity: 1;
+}
+
+.hero-subtitle {
+  margin-top: 2.5rem;
+  overflow: hidden;
+}
+
+.hero-subtitle-inner {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.2rem, 2.5vw, 2rem);
+  color: var(--gray);
+  transform: translateY(100%);
+  opacity: 0;
+  transition: transform 0.8s cubic-bezier(0.76, 0, 0.24, 1) 1.2s,
+              opacity 0.8s ease 1.2s;
+}
+
+.hero-subtitle-inner.revealed {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.hero-scroll-indicator {
+  position: absolute;
+  bottom: 3rem;
+  right: clamp(2rem, 6vw, 6rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease 2s forwards;
+}
+
+.hero-scroll-indicator span {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gray);
+  writing-mode: vertical-rl;
+}
+
+.scroll-line {
+  width: 1px;
+  height: 60px;
+  background: var(--gray);
+  position: relative;
+  overflow: hidden;
+}
+
+.scroll-line::after {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--accent);
+  animation: scrollLine 2s ease-in-out infinite;
+}
+
+@keyframes scrollLine {
+  0% { top: -100%; }
+  50% { top: 100%; }
+  100% { top: 100%; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-badge {
+  position: absolute;
+  top: 50%;
+  right: clamp(2rem, 8vw, 10rem);
+  transform: translateY(-50%);
+  z-index: 1;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease 1.6s forwards;
+}
+
+.hero-badge-inner {
+  width: clamp(100px, 12vw, 160px);
+  height: clamp(100px, 12vw, 160px);
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: rotateBadge 20s linear infinite;
+}
+
+@keyframes rotateBadge {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.hero-badge-text {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.55rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-align: center;
+  line-height: 1.4;
+}
+
+.hero-year {
+  position: absolute;
+  bottom: 3rem;
+  left: clamp(2rem, 6vw, 6rem);
+  font-family: var(--font-body);
+  font-weight: 900;
+  font-size: clamp(0.8rem, 1.2vw, 1rem);
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.15);
+  opacity: 0;
+  animation: fadeInUp 0.8s ease 1.8s forwards;
+}
+
+/* ========================================================================
+   SCROLL-RESPONSIVE STRETCH ELEMENTS
+   ======================================================================== */
+.stretch-element {
+  transition: transform 0.15s cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: transform;
+}
+
+/* ========================================================================
+   SECTION TRANSITIONS (Color blocks)
+   ======================================================================== */
+.section-transition {
+  position: relative;
+  width: 100%;
+  height: 15vh;
+  min-height: 80px;
+  overflow: hidden;
+}
+
+.section-transition-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform-origin: left;
+  transform: scaleX(0);
+  will-change: transform;
+}
+
+.section-transition.black-to-white .section-transition-fill {
+  background: var(--black);
+}
+
+.section-transition.white-to-black .section-transition-fill {
+  background: var(--white);
+}
+
+.section-transition.accent-sweep .section-transition-fill {
+  background: var(--accent);
+}
+
+/* ========================================================================
+   ABOUT SECTION
+   ======================================================================== */
+.about {
+  position: relative;
+  background: var(--white);
+  padding: clamp(6rem, 12vh, 12rem) clamp(2rem, 6vw, 6rem);
+  overflow: hidden;
+}
+
+.about-label {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 3rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.about-label::after {
+  content: '';
+  flex: 1;
+  height: 2px;
+  background: var(--light-bg);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(3rem, 6vw, 8rem);
+  align-items: start;
+}
+
+.about-headline {
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--black);
+}
+
+.about-headline em {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent);
+}
+
+.about-text {
+  padding-top: 1rem;
+}
+
+.about-text p {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: clamp(1rem, 1.3vw, 1.15rem);
+  line-height: 1.8;
+  color: var(--dark-text);
+  margin-bottom: 1.5rem;
+}
+
+.about-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 3rem;
+  padding-top: 3rem;
+  border-top: 3px solid var(--black);
+}
+
+.stat-number {
+  font-family: var(--font-body);
+  font-weight: 900;
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  line-height: 1;
+  color: var(--black);
+}
+
+.stat-label {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--gray);
+  margin-top: 0.5rem;
+}
+
+/* reveal animation */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.23, 1, 0.32, 1),
+              transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ========================================================================
+   HORIZONTAL SCROLL SERVICES
+   ======================================================================== */
+.services-wrapper {
+  position: relative;
+  background: var(--black);
+}
+
+.services-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.services-header {
+  position: absolute;
+  top: 2.5rem;
+  left: clamp(2rem, 6vw, 6rem);
+  z-index: 10;
+}
+
+.services-header-label {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.services-track {
+  display: flex;
+  height: 100%;
+  will-change: transform;
+}
+
+.service-panel {
+  flex: 0 0 100vw;
+  width: 100vw;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 clamp(2rem, 6vw, 6rem);
+  position: relative;
+  border-right: 3px solid rgba(255, 255, 255, 0.08);
+}
+
+.service-panel:last-child {
+  border-right: none;
+}
+
+.service-number {
+  font-family: var(--font-body);
+  font-weight: 900;
+  font-size: clamp(6rem, 15vw, 14rem);
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.04);
+  position: absolute;
+  top: 50%;
+  right: clamp(2rem, 8vw, 8rem);
+  transform: translateY(-50%);
+}
+
+.service-name {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  color: var(--white);
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 2;
+  max-width: 600px;
+}
+
+.service-description {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+  line-height: 1.8;
+  color: var(--gray);
+  max-width: 500px;
+  position: relative;
+  z-index: 2;
+}
+
+.service-accent-line {
+  width: 60px;
+  height: 3px;
+  background: var(--accent);
+  margin-bottom: 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.service-panel-counter {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  position: relative;
+  z-index: 2;
+}
+
+/* ========================================================================
+   WHY CHOOSE US — 3D TILT CARDS
+   ======================================================================== */
+.why-section {
+  position: relative;
+  background: var(--white);
+  padding: clamp(6rem, 12vh, 12rem) clamp(2rem, 6vw, 6rem);
+  overflow: hidden;
+}
+
+.why-label {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+}
+
+.why-headline {
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--black);
+  margin-bottom: 4rem;
+  max-width: 700px;
+}
+
+.why-headline em {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.tilt-card {
+  background: var(--black);
+  color: var(--white);
+  padding: clamp(2rem, 3vw, 3rem);
+  position: relative;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  transition: transform 0.15s ease-out;
+  will-change: transform;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.tilt-card-shine {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.08) 0%, transparent 60%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.tilt-card:hover .tilt-card-shine {
+  opacity: 1;
+}
+
+.tilt-card-number {
+  font-family: var(--font-body);
+  font-weight: 900;
+  font-size: clamp(3rem, 5vw, 4.5rem);
+  color: rgba(255, 255, 255, 0.06);
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  line-height: 1;
+}
+
+.tilt-card-icon {
+  width: 3px;
+  height: 40px;
+  background: var(--accent);
+  margin-bottom: 1.5rem;
+}
+
+.tilt-card-title {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.75rem;
+}
+
+.tilt-card-text {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--gray);
+}
+
+/* ========================================================================
+   CLIENT PORTFOLIO — MARQUEE
+   ======================================================================== */
+.clients-section {
+  position: relative;
+  background: var(--black);
+  padding: clamp(5rem, 10vh, 10rem) 0;
+  overflow: hidden;
+}
+
+.clients-label {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding-left: clamp(2rem, 6vw, 6rem);
+  margin-bottom: 3rem;
+}
+
+.marquee-container {
+  overflow: hidden;
+  padding: 1.5rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.marquee-container:last-of-type {
+  margin-top: 1rem;
+}
+
+.marquee-track {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  will-change: transform;
+}
+
+.marquee-item {
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: clamp(2rem, 5vw, 4rem);
+  color: var(--white);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  flex-shrink: 0;
+  padding: 0 1rem;
+}
+
+.marquee-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+  margin: 0 1.5rem;
+}
+
+/* ========================================================================
+   CONTACT — FULL BLEED SPLIT
+   ======================================================================== */
+.contact-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+  position: relative;
+}
+
+.contact-left {
+  background: var(--black);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(3rem, 6vw, 6rem);
+  position: relative;
+}
+
+.contact-left::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 3px;
+  height: 100%;
+  background: var(--accent);
+}
+
+.contact-headline {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(3rem, 5vw, 5rem);
+  line-height: 1.05;
+  color: var(--white);
+}
+
+.contact-headline span {
+  display: block;
+}
+
+.contact-subtext {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--gray);
+  margin-top: 2rem;
+  max-width: 400px;
+}
+
+.contact-info {
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.contact-info a {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.85rem;
+  color: var(--white);
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  transition: color 0.3s ease;
+}
+
+.contact-info a:hover {
+  color: var(--accent);
+}
+
+.contact-right {
+  background: var(--white);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(3rem, 6vw, 6rem);
+}
+
+.form-title {
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 1.5rem;
+  letter-spacing: -0.01em;
+  margin-bottom: 3rem;
+  color: var(--black);
+}
+
+.form-group {
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.form-group label {
+  display: block;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--black);
+  margin-bottom: 0.75rem;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid var(--light-bg);
+  background: transparent;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 1rem;
+  padding: 0.75rem 0;
+  color: var(--black);
+  outline: none;
+  transition: border-color 0.3s ease;
+  border-radius: 0;
+  -webkit-appearance: none;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-bottom-color: var(--accent);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.form-group select {
+  cursor: none;
+}
+
+.form-error {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.75rem;
+  color: var(--accent);
+  margin-top: 0.5rem;
+  display: none;
+}
+
+.form-group.error .form-error {
+  display: block;
+}
+
+.form-group.error input,
+.form-group.error textarea {
+  border-bottom-color: var(--accent);
+}
+
+.submit-btn {
+  display: inline-block;
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border: none;
+  padding: 1.25rem 3rem;
+  margin-top: 1rem;
+  transition: background 0.4s ease, color 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.submit-btn:hover {
+  background: var(--accent);
+  color: var(--white);
+}
+
+.form-success {
+  display: none;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.5rem;
+  color: var(--accent);
+  margin-top: 2rem;
+}
+
+.form-success.show {
+  display: block;
+}
+
+/* ========================================================================
+   FOOTER
+   ======================================================================== */
+.footer {
+  position: relative;
+  background: var(--black);
+  padding: clamp(4rem, 8vh, 8rem) clamp(2rem, 6vw, 6rem) clamp(2rem, 4vh, 4rem);
+  overflow: hidden;
+}
+
+.footer-watermark {
+  position: absolute;
+  bottom: -5%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-body);
+  font-weight: 100;
+  font-size: clamp(6rem, 18vw, 20rem);
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.03);
+  white-space: nowrap;
+  pointer-events: none;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.footer-top {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 3rem;
+  padding-bottom: 4rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  z-index: 2;
+}
+
+.footer-brand {
+  max-width: 350px;
+}
+
+.footer-brand-name {
+  font-family: var(--font-body);
+  font-weight: 900;
+  font-size: 1.2rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 1rem;
+}
+
+.footer-brand-name span {
+  color: var(--accent);
+}
+
+.footer-brand p {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: var(--gray);
+}
+
+.footer-col-title {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 1.5rem;
+}
+
+.footer-col a,
+.footer-col p {
+  display: block;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.85rem;
+  color: var(--gray);
+  text-decoration: none;
+  margin-bottom: 0.75rem;
+  transition: color 0.3s ease;
+  line-height: 1.5;
+}
+
+.footer-col a:hover {
+  color: var(--white);
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.footer-bottom p {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.75rem;
+  color: var(--gray);
+}
+
+.footer-bottom p span {
+  color: var(--accent);
+}
+
+/* ========================================================================
+   BACK TO TOP
+   ======================================================================== */
+.back-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--white);
+  background: var(--black);
+  border: 2px solid var(--white);
+  padding: 0.75rem 1.25rem;
+  text-decoration: none;
+  z-index: 9990;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease, background 0.3s ease, color 0.3s ease;
+  pointer-events: none;
+  mix-blend-mode: normal;
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+.back-to-top:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+/* ========================================================================
+   HORIZONTAL RULES (Stretch targets)
+   ======================================================================== */
+.section-hr {
+  width: 100%;
+  height: 3px;
+  background: var(--black);
+  border: none;
+  display: block;
+}
+
+.section-hr.light {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* ========================================================================
+   RESPONSIVE
+   ======================================================================== */
+@media (max-width: 1024px) {
+  .why-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .footer-top {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  html, body { cursor: auto; }
+  a, button, input, textarea { cursor: auto; }
+  .cursor { display: none; }
+
+  .nav-links { display: none; }
+  .nav-burger { display: flex; }
+
+  .nav {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .hero {
+    padding: 0 1.5rem;
+  }
+
+  .hero-badge {
+    display: none;
+  }
+
+  .hero-word {
+    font-size: clamp(3.5rem, 16vw, 8rem);
+  }
+
+  .about-stats {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  /* mobile: services stack vertically */
+  .services-wrapper {
+    height: auto !important;
+  }
+
+  .services-sticky {
+    position: relative;
+    height: auto;
+  }
+
+  .services-track {
+    flex-direction: column;
+    transform: none !important;
+  }
+
+  .service-panel {
+    flex: none;
+    width: 100%;
+    height: auto;
+    min-height: auto;
+    padding: clamp(4rem, 8vh, 6rem) 1.5rem;
+  }
+
+  .service-number {
+    font-size: clamp(5rem, 20vw, 8rem);
+    position: relative;
+    top: auto;
+    right: auto;
+    transform: none;
+    margin-bottom: -1rem;
+  }
+
+  .why-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-section {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-left::after {
+    width: 100%;
+    height: 3px;
+    top: auto;
+    bottom: 0;
+    right: 0;
+  }
+
+  .footer-top {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .marquee-item {
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-word {
+    font-size: clamp(2.8rem, 15vw, 5rem);
+  }
+
+  .about-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-number {
+    font-size: 2.5rem;
+  }
+}
+
+/* ========================================================================
+   UTILITY / SCRAMBLE
+   ======================================================================== */
+.scramble-text {
+  display: inline-block;
+}
+
+.scramble-text.scrambling {
+  font-family: var(--mono);
+}
+</style>
+</head>
+<body>
+
+<!-- CUSTOM CURSOR -->
+<div class="cursor" id="cursor"></div>
+
+<!-- PROGRESS BAR -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- LOADING SCREEN -->
+<div class="loader" id="loader">
+  <div class="loader-top"></div>
+  <div class="loader-bottom"></div>
+  <div class="loader-line" id="loaderLine"></div>
+</div>
+
+<!-- NAVIGATION -->
+<nav class="nav" id="nav">
+  <a href="#hero" class="nav-logo"><span>N</span>CC</a>
+  <ul class="nav-links">
+    <li><a href="#about" class="scramble-text" data-text="About">About</a></li>
+    <li><a href="#services" class="scramble-text" data-text="Services">Services</a></li>
+    <li><a href="#why" class="scramble-text" data-text="Differentiators">Differentiators</a></li>
+    <li><a href="#clients" class="scramble-text" data-text="Clients">Clients</a></li>
+    <li><a href="#contact" class="scramble-text" data-text="Contact">Contact</a></li>
+  </ul>
+  <button class="nav-burger" id="navBurger" aria-label="Toggle menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" class="scramble-text" data-text="About">About</a>
+  <a href="#services" class="scramble-text" data-text="Services">Services</a>
+  <a href="#why" class="scramble-text" data-text="Differentiators">Differentiators</a>
+  <a href="#clients" class="scramble-text" data-text="Clients">Clients</a>
+  <a href="#contact" class="scramble-text" data-text="Contact">Contact</a>
+</div>
+
+<!-- ================================================================
+     HERO
+     ================================================================ -->
+<section class="hero" id="hero">
+  <div class="hero-typography">
+    <div class="hero-line">
+      <div class="hero-word" id="heroNative"></div>
+    </div>
+    <div class="hero-line">
+      <div class="hero-word command-word" id="heroCommand"></div>
+    </div>
+  </div>
+  <div class="hero-subtitle">
+    <div class="hero-subtitle-inner" id="heroSubtitle">
+      Revenue Cycle Management for tribal health care
+    </div>
+  </div>
+  <div class="hero-badge">
+    <div class="hero-badge-inner">
+      <span class="hero-badge-text">100%<br>Native<br>American<br>Owned</span>
+    </div>
+  </div>
+  <div class="hero-scroll-indicator">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+  <div class="hero-year">EST. 2013 &mdash; PIERRE, SD</div>
+</section>
+
+<!-- TRANSITION -->
+<div class="section-transition accent-sweep" data-transition>
+  <div class="section-transition-fill"></div>
+</div>
+
+<!-- ================================================================
+     ABOUT
+     ================================================================ -->
+<section class="about" id="about">
+  <div class="about-label stretch-element scramble-text" data-text="Who We Are">Who We Are</div>
+  <div class="about-grid">
+    <div class="about-headline reveal">
+      Improving the quality of health care for <em>Native American</em> communities
+    </div>
+    <div class="about-text reveal reveal-delay-1">
+      <p>
+        Native Command Consulting is a 100% Native American-owned-and-operated professional consulting company based in Pierre, South Dakota. Since 2013, we have provided specialized Revenue Cycle Management services to Indian Health Service (IHS) and tribal health care facilities across the nation.
+      </p>
+      <p>
+        Our mission is singular and unwavering: to improve the quality of health care for Native American communities by ensuring their facilities operate with maximum efficiency and financial sustainability.
+      </p>
+    </div>
+  </div>
+  <div class="about-stats">
+    <div class="reveal reveal-delay-1">
+      <div class="stat-number" data-count="10">0</div>
+      <div class="stat-label">Years of Excellence</div>
+    </div>
+    <div class="reveal reveal-delay-2">
+      <div class="stat-number" data-count="7">0</div>
+      <div class="stat-label">Facility Partners</div>
+    </div>
+    <div class="reveal reveal-delay-3">
+      <div class="stat-number" data-count="5">0</div>
+      <div class="stat-label">States Served</div>
+    </div>
+  </div>
+</section>
+
+<!-- TRANSITION -->
+<div class="section-transition white-to-black" data-transition>
+  <div class="section-transition-fill"></div>
+</div>
+
+<!-- ================================================================
+     SERVICES — HORIZONTAL SCROLL
+     ================================================================ -->
+<section class="services-wrapper" id="services">
+  <div class="services-sticky">
+    <div class="services-header">
+      <div class="services-header-label scramble-text" data-text="Our Services">Our Services</div>
+    </div>
+    <div class="services-track" id="servicesTrack">
+      <!-- Panel 01 -->
+      <div class="service-panel">
+        <div class="service-number">01</div>
+        <div class="service-panel-counter">01 / 04</div>
+        <div class="service-accent-line stretch-element"></div>
+        <div class="service-name">Health Information Management</div>
+        <div class="service-description">
+          Comprehensive health information management services ensuring accurate patient records, regulatory compliance, and seamless data governance across IHS and tribal health care facilities. We bring structure and clarity to your most critical asset: patient data.
+        </div>
+      </div>
+      <!-- Panel 02 -->
+      <div class="service-panel">
+        <div class="service-number">02</div>
+        <div class="service-panel-counter">02 / 04</div>
+        <div class="service-accent-line stretch-element"></div>
+        <div class="service-name">Medical Coding & Billing</div>
+        <div class="service-description">
+          Expert medical coding and billing services delivered by specialized coders who understand the unique requirements of tribal and IHS facilities. Maximize revenue capture while maintaining absolute coding accuracy and compliance with federal standards.
+        </div>
+      </div>
+      <!-- Panel 03 -->
+      <div class="service-panel">
+        <div class="service-number">03</div>
+        <div class="service-panel-counter">03 / 04</div>
+        <div class="service-accent-line stretch-element"></div>
+        <div class="service-name">Electronic Content Management</div>
+        <div class="service-description">
+          Modern electronic content management solutions that digitize, organize, and secure your facility's documentation. Streamline workflows, reduce paper dependency, and enable instant access to critical information with enterprise-grade systems.
+        </div>
+      </div>
+      <!-- Panel 04 -->
+      <div class="service-panel">
+        <div class="service-number">04</div>
+        <div class="service-panel-counter">04 / 04</div>
+        <div class="service-accent-line stretch-element"></div>
+        <div class="service-name">Business Process Engineering</div>
+        <div class="service-description">
+          Strategic business process engineering that transforms operational inefficiencies into streamlined, high-performance systems. We analyze, redesign, and implement processes that drive measurable improvements in your facility's revenue cycle.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRANSITION -->
+<div class="section-transition accent-sweep" data-transition>
+  <div class="section-transition-fill"></div>
+</div>
+
+<!-- ================================================================
+     WHY CHOOSE US
+     ================================================================ -->
+<section class="why-section" id="why">
+  <div class="why-label scramble-text" data-text="Why Choose Us">Why Choose Us</div>
+  <div class="why-headline reveal">
+    We don't just consult. We <em>command</em> results.
+  </div>
+  <div class="why-grid">
+    <div class="tilt-card reveal reveal-delay-1" data-tilt>
+      <div class="tilt-card-shine"></div>
+      <div class="tilt-card-number">01</div>
+      <div class="tilt-card-icon"></div>
+      <div class="tilt-card-title">24/7 Capability</div>
+      <div class="tilt-card-text">Round-the-clock operational readiness ensures your facility never waits. Our team is always available, across every time zone, to keep your revenue cycle moving.</div>
+    </div>
+    <div class="tilt-card reveal reveal-delay-2" data-tilt>
+      <div class="tilt-card-shine"></div>
+      <div class="tilt-card-number">02</div>
+      <div class="tilt-card-icon"></div>
+      <div class="tilt-card-title">Innovative Technology</div>
+      <div class="tilt-card-text">We leverage cutting-edge tools and platforms to deliver smarter, faster results. Technology isn't an add-on for us; it's the backbone of every solution we engineer.</div>
+    </div>
+    <div class="tilt-card reveal reveal-delay-3" data-tilt>
+      <div class="tilt-card-shine"></div>
+      <div class="tilt-card-number">03</div>
+      <div class="tilt-card-icon"></div>
+      <div class="tilt-card-title">Exceptional Coders</div>
+      <div class="tilt-card-text">Our medical coding professionals are among the best in the industry. Rigorously trained, continuously certified, and laser-focused on accuracy in every claim.</div>
+    </div>
+    <div class="tilt-card reveal reveal-delay-1" data-tilt>
+      <div class="tilt-card-shine"></div>
+      <div class="tilt-card-number">04</div>
+      <div class="tilt-card-icon"></div>
+      <div class="tilt-card-title">Specialized Coders</div>
+      <div class="tilt-card-text">Deep specialization in IHS and tribal health care coding. Our team understands the nuances, regulations, and unique billing requirements that generic firms miss.</div>
+    </div>
+    <div class="tilt-card reveal reveal-delay-2" data-tilt>
+      <div class="tilt-card-shine"></div>
+      <div class="tilt-card-number">05</div>
+      <div class="tilt-card-icon"></div>
+      <div class="tilt-card-title">Extremely Flexible</div>
+      <div class="tilt-card-text">No rigid contracts or one-size-fits-all packages. We adapt to your facility's unique needs, scale up or down as required, and pivot when priorities shift.</div>
+    </div>
+    <div class="tilt-card reveal reveal-delay-3" data-tilt>
+      <div class="tilt-card-shine"></div>
+      <div class="tilt-card-number">06</div>
+      <div class="tilt-card-icon"></div>
+      <div class="tilt-card-title">Extensive Communication</div>
+      <div class="tilt-card-text">Transparent, proactive, and thorough communication at every stage. You'll always know exactly where your projects stand and what's coming next.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TRANSITION -->
+<div class="section-transition black-to-white" data-transition>
+  <div class="section-transition-fill"></div>
+</div>
+
+<!-- ================================================================
+     CLIENT PORTFOLIO — MARQUEE
+     ================================================================ -->
+<section class="clients-section" id="clients">
+  <div class="clients-label scramble-text" data-text="Client Portfolio">Client Portfolio</div>
+
+  <!-- Row 1 — scrolls left -->
+  <div class="marquee-container">
+    <div class="marquee-track" id="marquee1" data-direction="left" data-speed="0.5">
+      <span class="marquee-item">Maniilaq Health Center</span>
+      <span class="marquee-dot"></span>
+      <span class="marquee-item">Northern Navajo Medical Center</span>
+      <span class="marquee-dot"></span>
+      <span class="marquee-item">Chinle Comprehensive Health Care</span>
+      <span class="marquee-dot"></span>
+      <span class="marquee-item">Crownpoint Health Care</span>
+      <span class="marquee-dot"></span>
+      <span class="marquee-item">Gallup Indian Medical Center</span>
+      <span class="marquee-dot"></span>
+      <span class="marquee-item">Kayenta Health Center</span>
+      <span class="marquee-dot"></span>
+      <span class="marquee-item">Rosebud Sioux Tribe</span>
+      <span class="marquee-dot"></span>
+      <!-- Duplicate for seamless loop -->
+      <span class="marquee-item">Maniilaq Health Center</span>
+      <span class="marquee-dot"></span>
+      <span class="marquee-item">Northern Navajo Medical Center</span>
+      <span class="marquee-dot"></span>
+      <span class="marquee-item">Chinle Comprehensive Health Care</span>
+      <span class="marquee-dot"></span>
+      <span class="marquee-item">Crownpoint Health Care</span>
+      <span class="marquee-dot"></span>
+      <span class="marquee-item">Gallup Indian Medical Center</span>
+      <span class="marquee-dot"></span>
+      <span class="marquee-item">Kayenta Health Center</span>
+      <span class="marquee-dot"></span>
+      <span class="marquee-item">Rosebud Sioux Tribe</span>
+      <span class="marquee-dot"></span>
+    </div>
+  </div>
+
+  <!-- Row 2 — scrolls right -->
+  <div class="marquee-container">
+    <div class="marquee-track" id="marquee2" data-direction="right" data-speed="0.35">
+      <span class="marquee-item">Alaska</span>
+      <span class="marquee-dot"></span>
+      <span class="marquee-item">New Mexico</span>
+      <span class="marquee-dot"></span>
+      <span class="marquee-item">Arizona</span>
+      <span class="marquee-dot"></span>
+      <span class="marquee-item">South Dakota</span>
+      <span class="marquee-dot"></span>
+      <span class="marquee-item">IHS Facilities</span>
+      <span class="marquee-dot"></span>
+      <span class="marquee-item">Tribal Health Care</span>
+      <span class="marquee-dot"></span>
+      <span class="marquee-item">Revenue Cycle Management</span>
+      <span class="marquee-dot"></span>
+      <!-- Duplicate for seamless loop -->
+      <span class="marquee-item">Alaska</span>
+      <span class="marquee-dot"></span>
+      <span class="marquee-item">New Mexico</span>
+      <span class="marquee-dot"></span>
+      <span class="marquee-item">Arizona</span>
+      <span class="marquee-dot"></span>
+      <span class="marquee-item">South Dakota</span>
+      <span class="marquee-dot"></span>
+      <span class="marquee-item">IHS Facilities</span>
+      <span class="marquee-dot"></span>
+      <span class="marquee-item">Tribal Health Care</span>
+      <span class="marquee-dot"></span>
+      <span class="marquee-item">Revenue Cycle Management</span>
+      <span class="marquee-dot"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     CONTACT
+     ================================================================ -->
+<section class="contact-section" id="contact">
+  <div class="contact-left">
+    <div class="contact-headline reveal">
+      <span>Let's</span>
+      <span>Build</span>
+      <span>Something</span>
+    </div>
+    <div class="contact-subtext reveal reveal-delay-1">
+      Ready to transform your facility's revenue cycle? We're here. Let's talk about what Native Command can do for your community.
+    </div>
+    <div class="contact-info reveal reveal-delay-2">
+      <a href="tel:6052224416">(605) 222-4416</a>
+      <a href="mailto:info@nativecommand.com">info@nativecommand.com</a>
+      <a href="https://maps.google.com/?q=122+N+Huron+Ave+Pierre+SD+57501" target="_blank" rel="noopener">122 N. Huron Ave, Pierre, SD 57501</a>
+    </div>
+  </div>
+  <div class="contact-right">
+    <div class="form-title">Send a Message</div>
+    <form id="contactForm" novalidate>
+      <div class="form-group">
+        <label for="formName">Your Name</label>
+        <input type="text" id="formName" name="name" required autocomplete="name">
+        <div class="form-error">Please enter your name</div>
+      </div>
+      <div class="form-group">
+        <label for="formEmail">Email Address</label>
+        <input type="email" id="formEmail" name="email" required autocomplete="email">
+        <div class="form-error">Please enter a valid email address</div>
+      </div>
+      <div class="form-group">
+        <label for="formOrg">Organization</label>
+        <input type="text" id="formOrg" name="organization" autocomplete="organization">
+        <div class="form-error"></div>
+      </div>
+      <div class="form-group">
+        <label for="formService">Service Interest</label>
+        <select id="formService" name="service">
+          <option value="" disabled selected>Select a service</option>
+          <option value="him">Health Information Management</option>
+          <option value="coding">Medical Coding & Billing</option>
+          <option value="ecm">Electronic Content Management</option>
+          <option value="bpe">Business Process Engineering</option>
+          <option value="other">Other / General Inquiry</option>
+        </select>
+        <div class="form-error"></div>
+      </div>
+      <div class="form-group">
+        <label for="formMessage">Message</label>
+        <textarea id="formMessage" name="message" rows="4" required></textarea>
+        <div class="form-error">Please enter a message</div>
+      </div>
+      <button type="submit" class="submit-btn scramble-text" data-text="Send Message">Send Message</button>
+      <div class="form-success" id="formSuccess">Thank you. We'll be in touch shortly.</div>
+    </form>
+  </div>
+</section>
+
+<!-- ================================================================
+     FOOTER
+     ================================================================ -->
+<footer class="footer" id="footer">
+  <div class="footer-watermark">NATIVE COMMAND</div>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-brand-name">Native Command <span>Consulting</span></div>
+      <p>100% Native American-owned-and-operated professional consulting services. Dedicated to improving the quality of health care for Native American communities since 2013.</p>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Services</div>
+      <a href="#services">Health Information Mgmt</a>
+      <a href="#services">Medical Coding & Billing</a>
+      <a href="#services">Electronic Content Mgmt</a>
+      <a href="#services">Business Process Engineering</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Company</div>
+      <a href="#about">About Us</a>
+      <a href="#why">Differentiators</a>
+      <a href="#clients">Client Portfolio</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Contact</div>
+      <p>(605) 222-4416</p>
+      <p>info@nativecommand.com</p>
+      <p>122 N. Huron Ave<br>Pierre, SD 57501</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2024 Native Command Consulting. All rights reserved.</p>
+    <p>Designed with <span>purpose</span></p>
+  </div>
+</footer>
+
+<!-- BACK TO TOP -->
+<a href="#hero" class="back-to-top scramble-text" data-text="&uarr; TOP" id="backToTop">&uarr; TOP</a>
+
+<!-- ================================================================
+     JAVASCRIPT — THE ENGINE
+     ================================================================ -->
+<script>
+(function() {
+  'use strict';
+
+  /* ==================================================================
+     UTILITIES
+     ================================================================== */
+  const $ = (sel, ctx) => (ctx || document).querySelector(sel);
+  const $$ = (sel, ctx) => [...(ctx || document).querySelectorAll(sel)];
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const clamp = (val, min, max) => Math.min(Math.max(val, min), max);
+  const isMobile = () => window.innerWidth <= 768;
+
+  /* ==================================================================
+     LOADING SEQUENCE
+     ================================================================== */
+  const loader = $('#loader');
+  const loaderLine = $('#loaderLine');
+  const nav = $('#nav');
+
+  window.addEventListener('load', function() {
+    // Phase 1: red line draws
+    setTimeout(() => loaderLine.classList.add('animate'), 100);
+
+    // Phase 2: split open
+    setTimeout(() => {
+      loader.classList.add('done');
+      // Phase 3: reveal hero + nav
+      setTimeout(() => {
+        loader.classList.add('hidden');
+        nav.classList.add('visible');
+        revealHero();
+      }, 800);
+    }, 1400);
+  });
+
+  /* ==================================================================
+     HERO — KINETIC TYPOGRAPHY REVEAL
+     ================================================================== */
+  function buildHeroWord(container, word) {
+    word.split('').forEach((char, i) => {
+      const span = document.createElement('span');
+      span.className = 'hero-char';
+      span.textContent = char;
+      span.style.transitionDelay = (i * 0.06) + 's';
+      container.appendChild(span);
+    });
+  }
+
+  const heroNative = $('#heroNative');
+  const heroCommand = $('#heroCommand');
+  buildHeroWord(heroNative, 'NATIVE');
+  buildHeroWord(heroCommand, 'COMMAND');
+
+  function revealHero() {
+    const chars = $$('.hero-char');
+    // Staggered reveal
+    requestAnimationFrame(() => {
+      chars.forEach(c => c.classList.add('revealed'));
+    });
+    // Subtitle
+    setTimeout(() => {
+      $('#heroSubtitle').classList.add('revealed');
+    }, 400);
+  }
+
+  /* ==================================================================
+     CUSTOM CURSOR
+     ================================================================== */
+  if (!isMobile()) {
+    const cursor = $('#cursor');
+    let cursorX = -100, cursorY = -100;
+    let targetX = -100, targetY = -100;
+
+    document.addEventListener('mousemove', e => {
+      targetX = e.clientX;
+      targetY = e.clientY;
+    });
+
+    // Expand on interactive elements
+    const interactiveSelectors = 'a, button, input, textarea, select, [data-tilt], .scramble-text';
+    document.addEventListener('mouseover', e => {
+      if (e.target.closest(interactiveSelectors)) {
+        cursor.classList.add('expanded');
+      }
+    });
+    document.addEventListener('mouseout', e => {
+      if (e.target.closest(interactiveSelectors)) {
+        cursor.classList.remove('expanded');
+      }
+    });
+
+    function animateCursor() {
+      cursorX = lerp(cursorX, targetX, 0.15);
+      cursorY = lerp(cursorY, targetY, 0.15);
+      cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+  }
+
+  /* ==================================================================
+     PROGRESS BAR
+     ================================================================== */
+  const progressBar = $('#progressBar');
+
+  function updateProgress() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = docHeight > 0 ? scrollTop / docHeight : 0;
+    progressBar.style.transform = `scaleX(${progress})`;
+  }
+
+  /* ==================================================================
+     SCROLL VELOCITY TRACKING
+     ================================================================== */
+  let scrollY = 0;
+  let lastScrollY = 0;
+  let scrollVelocity = 0;
+  let scrollVelocitySmooth = 0;
+
+  function trackScroll() {
+    scrollY = window.scrollY;
+    scrollVelocity = Math.abs(scrollY - lastScrollY);
+    scrollVelocitySmooth = lerp(scrollVelocitySmooth, scrollVelocity, 0.1);
+    lastScrollY = scrollY;
+  }
+
+  /* ==================================================================
+     SCROLL-SPEED-RESPONSIVE STRETCH
+     ================================================================== */
+  const stretchElements = $$('.stretch-element');
+
+  function applyStretch() {
+    if (isMobile()) return;
+    const factor = 1 + clamp(scrollVelocitySmooth * 0.003, 0, 0.2);
+    stretchElements.forEach(el => {
+      el.style.transform = `scaleX(${factor})`;
+    });
+  }
+
+  /* ==================================================================
+     TEXT SCRAMBLE EFFECT
+     ================================================================== */
+  const scrambleChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*';
+
+  function scrambleText(element) {
+    const original = element.getAttribute('data-text') || element.textContent;
+    const length = original.length;
+    let iterations = 0;
+    const maxIterations = length * 3;
+
+    // Mark as scrambling for monospace font
+    element.classList.add('scrambling');
+
+    if (element._scrambleInterval) clearInterval(element._scrambleInterval);
+
+    element._scrambleInterval = setInterval(() => {
+      let display = '';
+      for (let i = 0; i < length; i++) {
+        if (original[i] === ' ') {
+          display += ' ';
+        } else if (i < iterations / 3) {
+          display += original[i];
+        } else {
+          display += scrambleChars[Math.floor(Math.random() * scrambleChars.length)];
+        }
+      }
+      element.textContent = display;
+      iterations++;
+
+      if (iterations >= maxIterations) {
+        clearInterval(element._scrambleInterval);
+        element.textContent = original;
+        element.classList.remove('scrambling');
+      }
+    }, 30);
+  }
+
+  // Attach scramble to all scramble-text elements
+  $$('.scramble-text').forEach(el => {
+    el.addEventListener('mouseenter', () => scrambleText(el));
+  });
+
+  /* ==================================================================
+     SECTION REVEAL ON SCROLL (IntersectionObserver)
+     ================================================================== */
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  $$('.reveal').forEach(el => revealObserver.observe(el));
+
+  /* ==================================================================
+     COUNTING ANIMATION FOR STATS
+     ================================================================== */
+  const statObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = parseInt(el.getAttribute('data-count'));
+        let current = 0;
+        const duration = 1500;
+        const startTime = performance.now();
+
+        function tick(now) {
+          const elapsed = now - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          // Ease out cubic
+          const eased = 1 - Math.pow(1 - progress, 3);
+          current = Math.round(eased * target);
+          el.textContent = current + '+';
+          if (progress < 1) {
+            requestAnimationFrame(tick);
+          }
+        }
+        requestAnimationFrame(tick);
+        statObserver.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  $$('[data-count]').forEach(el => statObserver.observe(el));
+
+  /* ==================================================================
+     SECTION TRANSITIONS (Fill on scroll)
+     ================================================================== */
+  const transitions = $$('[data-transition]');
+
+  function updateTransitions() {
+    transitions.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      const vh = window.innerHeight;
+      // Element starts entering from bottom, fully visible at center
+      const progress = clamp(1 - (rect.top / (vh * 0.7)), 0, 1);
+      const fill = el.querySelector('.section-transition-fill');
+      if (fill) {
+        fill.style.transform = `scaleX(${progress})`;
+      }
+    });
+  }
+
+  /* ==================================================================
+     HORIZONTAL SCROLL SERVICES
+     ================================================================== */
+  const servicesWrapper = $('#services');
+  const servicesTrack = $('#servicesTrack');
+  const servicePanels = $$('.service-panel');
+  const numPanels = servicePanels.length;
+
+  function setupHorizontalScroll() {
+    if (isMobile()) {
+      servicesWrapper.style.height = 'auto';
+      return;
+    }
+    // Set wrapper height to create scroll room
+    const totalWidth = numPanels * window.innerWidth;
+    servicesWrapper.style.height = totalWidth + 'px';
+  }
+
+  function updateHorizontalScroll() {
+    if (isMobile()) {
+      servicesTrack.style.transform = 'none';
+      return;
+    }
+
+    const wrapperRect = servicesWrapper.getBoundingClientRect();
+    const wrapperTop = wrapperRect.top;
+    const wrapperHeight = servicesWrapper.offsetHeight;
+    const viewportH = window.innerHeight;
+    const scrollRange = wrapperHeight - viewportH;
+
+    if (wrapperTop <= 0 && wrapperTop >= -scrollRange) {
+      const progress = Math.abs(wrapperTop) / scrollRange;
+      const maxTranslate = (numPanels - 1) * window.innerWidth;
+      const translateX = progress * maxTranslate;
+      servicesTrack.style.transform = `translateX(-${translateX}px)`;
+    } else if (wrapperTop > 0) {
+      servicesTrack.style.transform = 'translateX(0)';
+    } else {
+      const maxTranslate = (numPanels - 1) * window.innerWidth;
+      servicesTrack.style.transform = `translateX(-${maxTranslate}px)`;
+    }
+  }
+
+  setupHorizontalScroll();
+  window.addEventListener('resize', setupHorizontalScroll);
+
+  /* ==================================================================
+     3D TILT CARDS
+     ================================================================== */
+  if (!isMobile()) {
+    $$('[data-tilt]').forEach(card => {
+      const shine = card.querySelector('.tilt-card-shine');
+
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateX = ((y - centerY) / centerY) * -8;
+        const rotateY = ((x - centerX) / centerX) * 8;
+
+        card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+
+        if (shine) {
+          shine.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.12) 0%, transparent 60%)`;
+        }
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+        card.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
+        setTimeout(() => { card.style.transition = ''; }, 600);
+      });
+
+      card.addEventListener('mouseenter', () => {
+        card.style.transition = '';
+      });
+    });
+  }
+
+  /* ==================================================================
+     MARQUEE WITH SCROLL-VELOCITY COUPLING
+     ================================================================== */
+  const marquee1 = $('#marquee1');
+  const marquee2 = $('#marquee2');
+  let marquee1Pos = 0;
+  let marquee2Pos = 0;
+
+  function getHalfWidth(track) {
+    return track.scrollWidth / 2;
+  }
+
+  function updateMarquee() {
+    const baseSpeed1 = 0.5;
+    const baseSpeed2 = 0.35;
+    const velocityMultiplier = 1 + scrollVelocitySmooth * 0.15;
+
+    const speed1 = baseSpeed1 * velocityMultiplier;
+    const speed2 = baseSpeed2 * velocityMultiplier;
+
+    const half1 = getHalfWidth(marquee1);
+    const half2 = getHalfWidth(marquee2);
+
+    // Row 1: scroll left
+    marquee1Pos -= speed1;
+    if (Math.abs(marquee1Pos) >= half1) {
+      marquee1Pos = 0;
+    }
+    marquee1.style.transform = `translateX(${marquee1Pos}px)`;
+
+    // Row 2: scroll right
+    marquee2Pos += speed2;
+    if (marquee2Pos >= half2) {
+      marquee2Pos = 0;
+    }
+    marquee2.style.transform = `translateX(${marquee2Pos - half2}px)`;
+  }
+
+  /* ==================================================================
+     BACK TO TOP
+     ================================================================== */
+  const backToTop = $('#backToTop');
+
+  function updateBackToTop() {
+    if (window.scrollY > window.innerHeight) {
+      backToTop.classList.add('visible');
+    } else {
+      backToTop.classList.remove('visible');
+    }
+  }
+
+  /* ==================================================================
+     SMOOTH SCROLL FOR NAV LINKS
+     ================================================================== */
+  $$('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const targetId = link.getAttribute('href');
+      const target = $(targetId);
+      if (target) {
+        const offsetTop = target.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({
+          top: offsetTop,
+          behavior: 'smooth'
+        });
+        // Close mobile menu if open
+        if (mobileMenu.classList.contains('open')) {
+          mobileMenu.classList.remove('open');
+          navBurger.classList.remove('active');
+        }
+      }
+    });
+  });
+
+  /* ==================================================================
+     MOBILE MENU
+     ================================================================== */
+  const navBurger = $('#navBurger');
+  const mobileMenu = $('#mobileMenu');
+
+  navBurger.addEventListener('click', () => {
+    navBurger.classList.toggle('active');
+    mobileMenu.classList.toggle('open');
+  });
+
+  /* ==================================================================
+     FORM VALIDATION
+     ================================================================== */
+  const contactForm = $('#contactForm');
+  const formSuccess = $('#formSuccess');
+
+  function validateEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  contactForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    let valid = true;
+
+    // Reset errors
+    $$('.form-group', contactForm).forEach(g => g.classList.remove('error'));
+
+    const name = $('#formName');
+    const email = $('#formEmail');
+    const message = $('#formMessage');
+
+    if (!name.value.trim()) {
+      name.closest('.form-group').classList.add('error');
+      valid = false;
+    }
+
+    if (!email.value.trim() || !validateEmail(email.value.trim())) {
+      email.closest('.form-group').classList.add('error');
+      valid = false;
+    }
+
+    if (!message.value.trim()) {
+      message.closest('.form-group').classList.add('error');
+      valid = false;
+    }
+
+    if (valid) {
+      formSuccess.classList.add('show');
+      contactForm.reset();
+      // Re-scramble submit button text
+      const btn = contactForm.querySelector('.submit-btn');
+      scrambleText(btn);
+      setTimeout(() => {
+        formSuccess.classList.remove('show');
+      }, 5000);
+    }
+  });
+
+  /* ==================================================================
+     MAIN ANIMATION LOOP
+     ================================================================== */
+  function mainLoop() {
+    trackScroll();
+    updateProgress();
+    applyStretch();
+    updateTransitions();
+    updateHorizontalScroll();
+    updateMarquee();
+    updateBackToTop();
+    requestAnimationFrame(mainLoop);
+  }
+
+  requestAnimationFrame(mainLoop);
+
+  /* ==================================================================
+     RESIZE HANDLER
+     ================================================================== */
+  let resizeTimeout;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      setupHorizontalScroll();
+    }, 200);
+  });
+
+})();
+</script>
+</body>
+</html>
