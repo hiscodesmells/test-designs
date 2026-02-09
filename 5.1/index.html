@@ -1822,7 +1822,7 @@ a, button, input, textarea {
   const loaderLine = $('#loaderLine');
   const nav = $('#nav');
 
-  window.addEventListener('load', function() {
+  function startLoadSequence() {
     // Phase 1: red line draws
     setTimeout(() => loaderLine.classList.add('animate'), 100);
 
@@ -1836,7 +1836,14 @@ a, button, input, textarea {
         revealHero();
       }, 800);
     }, 1400);
-  });
+  }
+
+  // Handle case where load already fired before script runs
+  if (document.readyState === 'complete') {
+    startLoadSequence();
+  } else {
+    window.addEventListener('load', startLoadSequence);
+  }
 
   /* ==================================================================
      HERO — KINETIC TYPOGRAPHY REVEAL
