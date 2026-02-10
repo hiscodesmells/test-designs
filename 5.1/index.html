@@ -3,31 +3,65 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Native Command Consulting | Revenue Cycle Management</title>
-<meta name="description" content="100% Native American-owned-and-operated professional consulting services. Revenue Cycle Management for IHS and tribal health care facilities since 2013.">
+<title>Native Command Consulting | Revenue Cycle Management for Tribal Healthcare</title>
+<meta name="description" content="Native Command Consulting - 100% Native American-owned-and-operated professional consulting. Revenue Cycle Management for IHS and tribal health care facilities since 2013.">
+<meta name="keywords" content="Native American consulting, Revenue Cycle Management, IHS, tribal health care, medical coding, billing, Pierre SD">
+<meta name="author" content="Native Command Consulting">
+<meta property="og:title" content="Native Command Consulting | Revenue Cycle Management">
+<meta property="og:description" content="100% Native American-owned. Professional consulting services for IHS and tribal health care facilities.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#000000">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
 <style>
-/* ========================================================================
+/* ============================================================================
    RESET & FOUNDATION
-   ======================================================================== */
-*, *::before, *::after {
+   ============================================================================ */
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
 :root {
+  /* Color System */
   --white: #FFFFFF;
   --black: #000000;
   --accent: #E63B2E;
+  --accent-dark: #C4291F;
   --gray: #ABABAB;
+  --gray-light: #D0D0D0;
   --light-bg: #F0F0F0;
   --dark-text: #333333;
-  --font-display: 'Instrument Serif', Georgia, serif;
+  --off-black: #111111;
+
+  /* Typography System */
+  --font-display: 'Instrument Serif', Georgia, 'Times New Roman', serif;
   --font-body: 'Epilogue', 'Helvetica Neue', Arial, sans-serif;
   --mono: 'Courier New', Courier, monospace;
+
+  /* Spacing System */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 2rem;
+  --space-lg: 4rem;
+  --space-xl: 6rem;
+  --space-2xl: 8rem;
+  --space-3xl: 12rem;
+
+  /* Timing */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-expo: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+
+  /* Layout */
+  --container-padding: clamp(1.5rem, 6vw, 6rem);
+  --border-weight: 3px;
 }
 
 html {
@@ -36,25 +70,69 @@ html {
   scrollbar-width: thin;
   scrollbar-color: var(--accent) var(--black);
   cursor: none;
+  font-size: 16px;
 }
 
 body {
   font-family: var(--font-body);
+  font-weight: 400;
   background: var(--white);
   color: var(--black);
   overflow-x: hidden;
   cursor: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  line-height: 1.6;
 }
 
-a, button, input, textarea {
+/* Remove cursor:none from selectable elements */
+a,
+button,
+input,
+textarea,
+select,
+[data-tilt] {
   cursor: none;
 }
 
-/* ========================================================================
+::selection {
+  background: var(--accent);
+  color: var(--white);
+}
+
+::-moz-selection {
+  background: var(--accent);
+  color: var(--white);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Webkit scrollbar customization */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-dark);
+}
+
+
+/* ============================================================================
    CUSTOM CURSOR
-   ======================================================================== */
+   ============================================================================ */
 .cursor {
   position: fixed;
   width: 20px;
@@ -64,12 +142,19 @@ a, button, input, textarea {
   pointer-events: none;
   z-index: 100000;
   mix-blend-mode: difference;
-  transition: width 0.3s cubic-bezier(0.23, 1, 0.32, 1),
-              height 0.3s cubic-bezier(0.23, 1, 0.32, 1),
-              margin 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: width 0.35s var(--ease-out-back),
+              height 0.35s var(--ease-out-back),
+              margin-left 0.35s var(--ease-out-back),
+              margin-top 0.35s var(--ease-out-back),
+              opacity 0.3s ease;
   margin-left: -10px;
   margin-top: -10px;
   will-change: transform;
+  opacity: 0;
+}
+
+.cursor.active {
+  opacity: 1;
 }
 
 .cursor.expanded {
@@ -79,9 +164,17 @@ a, button, input, textarea {
   margin-top: -25px;
 }
 
-/* ========================================================================
+.cursor.clicking {
+  width: 14px;
+  height: 14px;
+  margin-left: -7px;
+  margin-top: -7px;
+}
+
+
+/* ============================================================================
    PROGRESS BAR
-   ======================================================================== */
+   ============================================================================ */
 .progress-bar {
   position: fixed;
   top: 0;
@@ -89,15 +182,17 @@ a, button, input, textarea {
   height: 3px;
   background: var(--accent);
   z-index: 99999;
-  transform-origin: left;
+  transform-origin: left center;
   transform: scaleX(0);
   width: 100%;
   will-change: transform;
+  pointer-events: none;
 }
 
-/* ========================================================================
+
+/* ============================================================================
    LOADING SCREEN
-   ======================================================================== */
+   ============================================================================ */
 .loader {
   position: fixed;
   top: 0;
@@ -116,19 +211,20 @@ a, button, input, textarea {
   position: absolute;
   left: 0;
   width: 100%;
-  height: 50%;
+  height: 50.1%;
   background: var(--black);
-  transition: transform 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+  transition: transform 0.9s var(--ease-in-out-expo);
+  will-change: transform;
 }
 
 .loader-top {
   top: 0;
-  transform-origin: top;
+  transform-origin: center top;
 }
 
 .loader-bottom {
   bottom: 0;
-  transform-origin: bottom;
+  transform-origin: center bottom;
 }
 
 .loader.done .loader-top {
@@ -150,33 +246,56 @@ a, button, input, textarea {
   width: 0;
   height: 3px;
   background: var(--accent);
-  transition: width 1.2s cubic-bezier(0.76, 0, 0.24, 1);
+  transition: width 1.2s var(--ease-in-out-expo);
 }
 
 .loader-line.animate {
   width: 30vw;
 }
 
-/* ========================================================================
+.loader-text {
+  position: absolute;
+  z-index: 3;
+  bottom: calc(50% - 40px);
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-body);
+  font-weight: 200;
+  font-size: 0.7rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--gray);
+  opacity: 0;
+  transition: opacity 0.4s ease 0.3s;
+}
+
+.loader-text.show {
+  opacity: 1;
+}
+
+
+/* ============================================================================
    NAVIGATION
-   ======================================================================== */
+   ============================================================================ */
 .nav {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 9999;
-  padding: 1.5rem 3rem;
+  padding: 1.5rem var(--container-padding);
   display: flex;
   justify-content: space-between;
   align-items: center;
   mix-blend-mode: difference;
   opacity: 0;
   transition: opacity 0.6s ease;
+  pointer-events: none;
 }
 
 .nav.visible {
   opacity: 1;
+  pointer-events: all;
 }
 
 .nav-logo {
@@ -187,6 +306,9 @@ a, button, input, textarea {
   text-transform: uppercase;
   color: var(--white);
   text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.15em;
 }
 
 .nav-logo span {
@@ -197,18 +319,25 @@ a, button, input, textarea {
   display: flex;
   gap: 2.5rem;
   list-style: none;
+  align-items: center;
+}
+
+.nav-links li {
+  overflow: hidden;
 }
 
 .nav-links a {
   font-family: var(--font-body);
   font-weight: 500;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--white);
   text-decoration: none;
   position: relative;
-  padding: 0.25rem 0;
+  padding: 0.3rem 0;
+  display: inline-block;
+  transition: color 0.3s ease;
 }
 
 .nav-links a::after {
@@ -216,16 +345,20 @@ a, button, input, textarea {
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 0;
+  width: 100%;
   height: 2px;
   background: var(--accent);
-  transition: width 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform 0.4s var(--ease-out-expo);
 }
 
 .nav-links a:hover::after {
-  width: 100%;
+  transform: scaleX(1);
+  transform-origin: left center;
 }
 
+/* Hamburger */
 .nav-burger {
   display: none;
   flex-direction: column;
@@ -234,6 +367,7 @@ a, button, input, textarea {
   border: none;
   padding: 0.5rem;
   z-index: 10001;
+  position: relative;
 }
 
 .nav-burger span {
@@ -241,7 +375,8 @@ a, button, input, textarea {
   width: 28px;
   height: 2px;
   background: var(--white);
-  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: all 0.4s var(--ease-out-expo);
+  transform-origin: center;
 }
 
 .nav-burger.active span:nth-child(1) {
@@ -250,25 +385,29 @@ a, button, input, textarea {
 
 .nav-burger.active span:nth-child(2) {
   opacity: 0;
+  transform: scaleX(0);
 }
 
 .nav-burger.active span:nth-child(3) {
   transform: translateY(-8px) rotate(-45deg);
 }
 
+/* Mobile menu overlay */
 .mobile-menu {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100vh;
+  height: 100dvh;
   background: var(--black);
   z-index: 10000;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  gap: 2rem;
+  align-items: flex-start;
+  padding: 2rem var(--container-padding);
+  gap: 0.5rem;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.5s ease;
@@ -282,33 +421,85 @@ a, button, input, textarea {
 .mobile-menu a {
   font-family: var(--font-body);
   font-weight: 800;
-  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-size: clamp(2rem, 8vw, 4rem);
   color: var(--white);
   text-decoration: none;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.05em;
+  line-height: 1.2;
   transition: color 0.3s ease;
+  display: block;
+  transform: translateY(30px);
+  opacity: 0;
+  transition: color 0.3s ease, transform 0.5s var(--ease-out-expo), opacity 0.5s ease;
 }
+
+.mobile-menu.open a {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.mobile-menu a:nth-child(1) { transition-delay: 0.1s; }
+.mobile-menu a:nth-child(2) { transition-delay: 0.15s; }
+.mobile-menu a:nth-child(3) { transition-delay: 0.2s; }
+.mobile-menu a:nth-child(4) { transition-delay: 0.25s; }
+.mobile-menu a:nth-child(5) { transition-delay: 0.3s; }
 
 .mobile-menu a:hover {
   color: var(--accent);
 }
 
-/* ========================================================================
+.mobile-menu-footer {
+  position: absolute;
+  bottom: 2rem;
+  left: var(--container-padding);
+  right: var(--container-padding);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.mobile-menu-footer span {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.75rem;
+  color: var(--gray);
+  letter-spacing: 0.1em;
+}
+
+
+/* ============================================================================
    HERO SECTION
-   ======================================================================== */
+   ============================================================================ */
 .hero {
   position: relative;
   width: 100%;
   height: 100vh;
+  height: 100dvh;
   min-height: 700px;
   background: var(--black);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  padding: 0 clamp(2rem, 6vw, 6rem);
+  padding: 0 var(--container-padding);
   overflow: hidden;
+}
+
+/* Subtle grid pattern on hero bg */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+  background-size: 80px 80px;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .hero-typography {
@@ -325,36 +516,52 @@ a, button, input, textarea {
   font-family: var(--font-body);
   font-weight: 900;
   font-size: clamp(4.5rem, 15vw, 14rem);
-  line-height: 0.9;
-  letter-spacing: -0.03em;
+  line-height: 0.88;
+  letter-spacing: -0.04em;
   text-transform: uppercase;
   color: var(--white);
   display: flex;
+  position: relative;
 }
 
 .hero-word.command-word {
   animation: commandPulse 8s ease-in-out infinite;
+  animation-delay: 2s;
 }
 
 @keyframes commandPulse {
-  0%, 100% { color: var(--white); }
-  40% { color: var(--accent); }
-  60% { color: var(--accent); }
+  0%, 100% {
+    color: var(--white);
+  }
+  35% {
+    color: var(--white);
+  }
+  45% {
+    color: var(--accent);
+  }
+  65% {
+    color: var(--accent);
+  }
+  75% {
+    color: var(--white);
+  }
 }
 
 .hero-char {
   display: inline-block;
   transform: translateY(120%) rotate(8deg);
   opacity: 0;
-  transition: transform 0.8s cubic-bezier(0.76, 0, 0.24, 1),
-              opacity 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+  will-change: transform, opacity;
 }
 
 .hero-char.revealed {
-  transform: translateY(0) rotate(0deg);
+  transform: translateY(0%) rotate(0deg);
   opacity: 1;
+  transition: transform 0.8s var(--ease-in-out-expo),
+              opacity 0.6s ease;
 }
 
+/* Subtitle */
 .hero-subtitle {
   margin-top: 2.5rem;
   overflow: hidden;
@@ -363,36 +570,63 @@ a, button, input, textarea {
 .hero-subtitle-inner {
   font-family: var(--font-display);
   font-style: italic;
-  font-size: clamp(1.2rem, 2.5vw, 2rem);
+  font-size: clamp(1.1rem, 2.5vw, 2rem);
   color: var(--gray);
-  transform: translateY(100%);
+  transform: translateY(110%);
   opacity: 0;
-  transition: transform 0.8s cubic-bezier(0.76, 0, 0.24, 1) 1.2s,
-              opacity 0.8s ease 1.2s;
+  will-change: transform;
 }
 
 .hero-subtitle-inner.revealed {
   transform: translateY(0);
   opacity: 1;
+  transition: transform 0.8s var(--ease-in-out-expo),
+              opacity 0.6s ease;
 }
 
+/* Tagline under subtitle */
+.hero-tagline {
+  margin-top: 1rem;
+  overflow: hidden;
+}
+
+.hero-tagline-inner {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: clamp(0.7rem, 1vw, 0.85rem);
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+  transform: translateY(110%);
+  opacity: 0;
+  will-change: transform;
+}
+
+.hero-tagline-inner.revealed {
+  transform: translateY(0);
+  opacity: 1;
+  transition: transform 0.8s var(--ease-in-out-expo) 0.15s,
+              opacity 0.6s ease 0.15s;
+}
+
+/* Scroll indicator */
 .hero-scroll-indicator {
   position: absolute;
   bottom: 3rem;
-  right: clamp(2rem, 6vw, 6rem);
+  right: var(--container-padding);
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
   opacity: 0;
-  animation: fadeInUp 0.8s ease 2s forwards;
+  animation: fadeInUp 0.8s ease 2.2s forwards;
 }
 
 .hero-scroll-indicator span {
   font-family: var(--font-body);
   font-weight: 500;
-  font-size: 0.7rem;
-  letter-spacing: 0.2em;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
   color: var(--gray);
   writing-mode: vertical-rl;
@@ -401,7 +635,7 @@ a, button, input, textarea {
 .scroll-line {
   width: 1px;
   height: 60px;
-  background: var(--gray);
+  background: rgba(255, 255, 255, 0.15);
   position: relative;
   overflow: hidden;
 }
@@ -424,30 +658,49 @@ a, button, input, textarea {
 }
 
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
+/* Badge */
 .hero-badge {
   position: absolute;
   top: 50%;
-  right: clamp(2rem, 8vw, 10rem);
+  right: clamp(3rem, 10vw, 12rem);
   transform: translateY(-50%);
   z-index: 1;
   opacity: 0;
-  animation: fadeInUp 0.8s ease 1.6s forwards;
+  animation: fadeInUp 1s ease 1.8s forwards;
 }
 
 .hero-badge-inner {
-  width: clamp(100px, 12vw, 160px);
-  height: clamp(100px, 12vw, 160px);
-  border: 2px solid var(--accent);
+  width: clamp(100px, 11vw, 150px);
+  height: clamp(100px, 11vw, 150px);
+  border: 2px solid rgba(230, 59, 46, 0.6);
   border-radius: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  animation: rotateBadge 20s linear infinite;
+  animation: rotateBadge 25s linear infinite;
+  position: relative;
+}
+
+.hero-badge-inner::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  right: -8px;
+  bottom: -8px;
+  border: 1px solid rgba(230, 59, 46, 0.2);
+  border-radius: 50%;
 }
 
 @keyframes rotateBadge {
@@ -458,43 +711,91 @@ a, button, input, textarea {
 .hero-badge-text {
   font-family: var(--font-body);
   font-weight: 700;
-  font-size: 0.55rem;
+  font-size: 0.5rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--accent);
   text-align: center;
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
+/* Year stamp */
 .hero-year {
   position: absolute;
   bottom: 3rem;
-  left: clamp(2rem, 6vw, 6rem);
+  left: var(--container-padding);
   font-family: var(--font-body);
   font-weight: 900;
-  font-size: clamp(0.8rem, 1.2vw, 1rem);
-  letter-spacing: 0.2em;
-  color: rgba(255, 255, 255, 0.15);
+  font-size: clamp(0.65rem, 1vw, 0.85rem);
+  letter-spacing: 0.25em;
+  color: rgba(255, 255, 255, 0.12);
   opacity: 0;
-  animation: fadeInUp 0.8s ease 1.8s forwards;
+  animation: fadeInUp 0.8s ease 2s forwards;
 }
 
-/* ========================================================================
+/* Decorative corner marks */
+.hero-corner {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  z-index: 3;
+  opacity: 0;
+  animation: fadeInUp 0.5s ease 2.5s forwards;
+}
+
+.hero-corner::before,
+.hero-corner::after {
+  content: '';
+  position: absolute;
+  background: var(--accent);
+}
+
+.hero-corner--tl {
+  top: 2rem;
+  left: var(--container-padding);
+}
+
+.hero-corner--tl::before {
+  top: 0; left: 0; width: 20px; height: 2px;
+}
+
+.hero-corner--tl::after {
+  top: 0; left: 0; width: 2px; height: 20px;
+}
+
+.hero-corner--br {
+  bottom: 2rem;
+  right: var(--container-padding);
+}
+
+.hero-corner--br::before {
+  bottom: 0; right: 0; width: 20px; height: 2px;
+}
+
+.hero-corner--br::after {
+  bottom: 0; right: 0; width: 2px; height: 20px;
+}
+
+
+/* ============================================================================
    SCROLL-RESPONSIVE STRETCH ELEMENTS
-   ======================================================================== */
+   ============================================================================ */
 .stretch-element {
-  transition: transform 0.15s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: transform 0.12s var(--ease-out-quart);
   will-change: transform;
+  transform-origin: left center;
 }
 
-/* ========================================================================
-   SECTION TRANSITIONS (Color blocks)
-   ======================================================================== */
+
+/* ============================================================================
+   SECTION TRANSITIONS (Color blocks fill on scroll)
+   ============================================================================ */
 .section-transition {
   position: relative;
   width: 100%;
-  height: 15vh;
-  min-height: 80px;
+  height: 12vh;
+  min-height: 60px;
+  max-height: 120px;
   overflow: hidden;
 }
 
@@ -504,12 +805,20 @@ a, button, input, textarea {
   left: 0;
   width: 100%;
   height: 100%;
-  transform-origin: left;
+  transform-origin: left center;
   transform: scaleX(0);
   will-change: transform;
 }
 
+.section-transition.black-to-white {
+  background: var(--white);
+}
+
 .section-transition.black-to-white .section-transition-fill {
+  background: var(--black);
+}
+
+.section-transition.white-to-black {
   background: var(--black);
 }
 
@@ -517,17 +826,22 @@ a, button, input, textarea {
   background: var(--white);
 }
 
+.section-transition.accent-sweep {
+  background: var(--black);
+}
+
 .section-transition.accent-sweep .section-transition-fill {
   background: var(--accent);
 }
 
-/* ========================================================================
+
+/* ============================================================================
    ABOUT SECTION
-   ======================================================================== */
+   ============================================================================ */
 .about {
   position: relative;
   background: var(--white);
-  padding: clamp(6rem, 12vh, 12rem) clamp(2rem, 6vw, 6rem);
+  padding: clamp(6rem, 12vh, 12rem) var(--container-padding);
   overflow: hidden;
 }
 
@@ -547,13 +861,13 @@ a, button, input, textarea {
 .about-label::after {
   content: '';
   flex: 1;
-  height: 2px;
+  height: 1px;
   background: var(--light-bg);
 }
 
 .about-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.2fr 1fr;
   gap: clamp(3rem, 6vw, 8rem);
   align-items: start;
 }
@@ -561,9 +875,9 @@ a, button, input, textarea {
 .about-headline {
   font-family: var(--font-body);
   font-weight: 800;
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
-  line-height: 1.05;
-  letter-spacing: -0.02em;
+  font-size: clamp(2.2rem, 4.5vw, 4rem);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
   color: var(--black);
 }
 
@@ -575,49 +889,77 @@ a, button, input, textarea {
 }
 
 .about-text {
-  padding-top: 1rem;
+  padding-top: 0.5rem;
 }
 
 .about-text p {
   font-family: var(--font-body);
   font-weight: 400;
-  font-size: clamp(1rem, 1.3vw, 1.15rem);
-  line-height: 1.8;
+  font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+  line-height: 1.85;
   color: var(--dark-text);
   margin-bottom: 1.5rem;
 }
 
+.about-text p:last-child {
+  margin-bottom: 0;
+}
+
+/* Stats row */
 .about-stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
-  margin-top: 3rem;
-  padding-top: 3rem;
-  border-top: 3px solid var(--black);
+  margin-top: clamp(3rem, 6vh, 5rem);
+  padding-top: clamp(3rem, 6vh, 5rem);
+  border-top: var(--border-weight) solid var(--black);
+}
+
+.stat-item {
+  position: relative;
 }
 
 .stat-number {
   font-family: var(--font-body);
   font-weight: 900;
-  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  font-size: clamp(2.5rem, 4.5vw, 3.5rem);
   line-height: 1;
   color: var(--black);
+  letter-spacing: -0.02em;
 }
 
 .stat-label {
   font-family: var(--font-display);
   font-style: italic;
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 1.1vw, 1.05rem);
   color: var(--gray);
   margin-top: 0.5rem;
 }
 
-/* reveal animation */
+/* Decorative about element */
+.about-deco {
+  position: absolute;
+  top: var(--container-padding);
+  right: var(--container-padding);
+  font-family: var(--font-body);
+  font-weight: 100;
+  font-size: clamp(8rem, 15vw, 14rem);
+  line-height: 1;
+  color: var(--light-bg);
+  pointer-events: none;
+  z-index: 0;
+  user-select: none;
+}
+
+
+/* ============================================================================
+   REVEAL ANIMATION SYSTEM
+   ============================================================================ */
 .reveal {
   opacity: 0;
   transform: translateY(40px);
-  transition: opacity 0.8s cubic-bezier(0.23, 1, 0.32, 1),
-              transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: opacity 0.8s var(--ease-out-expo),
+              transform 0.8s var(--ease-out-expo);
 }
 
 .reveal.visible {
@@ -629,10 +971,38 @@ a, button, input, textarea {
 .reveal-delay-2 { transition-delay: 0.2s; }
 .reveal-delay-3 { transition-delay: 0.3s; }
 .reveal-delay-4 { transition-delay: 0.4s; }
+.reveal-delay-5 { transition-delay: 0.5s; }
 
-/* ========================================================================
+/* Reveal from left */
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.8s var(--ease-out-expo),
+              transform 0.8s var(--ease-out-expo);
+}
+
+.reveal-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Scale reveal */
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.8s var(--ease-out-expo),
+              transform 0.8s var(--ease-out-expo);
+}
+
+.reveal-scale.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+
+/* ============================================================================
    HORIZONTAL SCROLL SERVICES
-   ======================================================================== */
+   ============================================================================ */
 .services-wrapper {
   position: relative;
   background: var(--black);
@@ -642,14 +1012,20 @@ a, button, input, textarea {
   position: sticky;
   top: 0;
   height: 100vh;
+  height: 100dvh;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .services-header {
   position: absolute;
   top: 2.5rem;
-  left: clamp(2rem, 6vw, 6rem);
+  left: var(--container-padding);
   z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
 }
 
 .services-header-label {
@@ -659,6 +1035,29 @@ a, button, input, textarea {
   letter-spacing: 0.25em;
   text-transform: uppercase;
   color: var(--accent);
+}
+
+.services-progress {
+  position: absolute;
+  top: 2.5rem;
+  right: var(--container-padding);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.services-progress-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  transition: background 0.3s ease, transform 0.3s var(--ease-out-back);
+}
+
+.services-progress-dot.active {
+  background: var(--accent);
+  transform: scale(1.3);
 }
 
 .services-track {
@@ -674,9 +1073,10 @@ a, button, input, textarea {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 0 clamp(2rem, 6vw, 6rem);
+  padding: 0 var(--container-padding);
+  padding-right: 30vw;
   position: relative;
-  border-right: 3px solid rgba(255, 255, 255, 0.08);
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .service-panel:last-child {
@@ -686,64 +1086,91 @@ a, button, input, textarea {
 .service-number {
   font-family: var(--font-body);
   font-weight: 900;
-  font-size: clamp(6rem, 15vw, 14rem);
-  line-height: 1;
-  color: rgba(255, 255, 255, 0.04);
+  font-size: clamp(8rem, 18vw, 18rem);
+  line-height: 0.85;
+  color: rgba(255, 255, 255, 0.03);
   position: absolute;
   top: 50%;
   right: clamp(2rem, 8vw, 8rem);
   transform: translateY(-50%);
+  pointer-events: none;
+  user-select: none;
 }
 
-.service-name {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
-  color: var(--white);
-  margin-bottom: 1.5rem;
-  position: relative;
-  z-index: 2;
-  max-width: 600px;
-}
-
-.service-description {
+.service-panel-counter {
   font-family: var(--font-body);
-  font-weight: 400;
-  font-size: clamp(0.95rem, 1.2vw, 1.1rem);
-  line-height: 1.8;
-  color: var(--gray);
-  max-width: 500px;
+  font-weight: 700;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
   position: relative;
   z-index: 2;
 }
 
 .service-accent-line {
   width: 60px;
-  height: 3px;
+  height: var(--border-weight);
   background: var(--accent);
   margin-bottom: 2rem;
   position: relative;
   z-index: 2;
+  transform-origin: left center;
 }
 
-.service-panel-counter {
+.service-name {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  line-height: 1.05;
+  color: var(--white);
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 2;
+  max-width: 550px;
+}
+
+.service-description {
   font-family: var(--font-body);
-  font-weight: 700;
-  font-size: 0.7rem;
-  letter-spacing: 0.2em;
-  color: var(--accent);
-  margin-bottom: 1rem;
+  font-weight: 400;
+  font-size: clamp(0.9rem, 1.1vw, 1.05rem);
+  line-height: 1.85;
+  color: var(--gray);
+  max-width: 480px;
   position: relative;
   z-index: 2;
 }
 
-/* ========================================================================
-   WHY CHOOSE US — 3D TILT CARDS
-   ======================================================================== */
+.service-tag {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--white);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.4rem 1rem;
+  margin-top: 2rem;
+  position: relative;
+  z-index: 2;
+  transition: border-color 0.3s ease, color 0.3s ease;
+}
+
+.service-tag:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+
+/* ============================================================================
+   WHY CHOOSE US - 3D TILT CARDS
+   ============================================================================ */
 .why-section {
   position: relative;
   background: var(--white);
-  padding: clamp(6rem, 12vh, 12rem) clamp(2rem, 6vw, 6rem);
+  padding: clamp(6rem, 12vh, 12rem) var(--container-padding);
   overflow: hidden;
 }
 
@@ -760,12 +1187,12 @@ a, button, input, textarea {
 .why-headline {
   font-family: var(--font-body);
   font-weight: 800;
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
-  line-height: 1.05;
-  letter-spacing: -0.02em;
+  font-size: clamp(2.2rem, 4.5vw, 4rem);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
   color: var(--black);
-  margin-bottom: 4rem;
-  max-width: 700px;
+  margin-bottom: clamp(3rem, 6vh, 5rem);
+  max-width: 650px;
 }
 
 .why-headline em {
@@ -777,22 +1204,22 @@ a, button, input, textarea {
 .why-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
 .tilt-card {
   background: var(--black);
   color: var(--white);
-  padding: clamp(2rem, 3vw, 3rem);
+  padding: clamp(2rem, 3vw, 2.5rem);
   position: relative;
   overflow: hidden;
   transform-style: preserve-3d;
-  transition: transform 0.15s ease-out;
   will-change: transform;
-  min-height: 280px;
+  min-height: 300px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .tilt-card-shine {
@@ -801,10 +1228,10 @@ a, button, input, textarea {
   left: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.08) 0%, transparent 60%);
+  background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.06) 0%, transparent 60%);
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.4s ease;
 }
 
 .tilt-card:hover .tilt-card-shine {
@@ -815,39 +1242,63 @@ a, button, input, textarea {
   font-family: var(--font-body);
   font-weight: 900;
   font-size: clamp(3rem, 5vw, 4.5rem);
-  color: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.04);
   position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
+  top: 1.25rem;
+  right: 1.25rem;
   line-height: 1;
+  pointer-events: none;
+  user-select: none;
 }
 
 .tilt-card-icon {
-  width: 3px;
+  width: var(--border-weight);
   height: 40px;
   background: var(--accent);
   margin-bottom: 1.5rem;
+  transition: height 0.3s var(--ease-out-expo);
+}
+
+.tilt-card:hover .tilt-card-icon {
+  height: 55px;
 }
 
 .tilt-card-title {
   font-family: var(--font-body);
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   letter-spacing: 0.02em;
   margin-bottom: 0.75rem;
+  line-height: 1.3;
 }
 
 .tilt-card-text {
   font-family: var(--font-body);
   font-weight: 400;
-  font-size: 0.9rem;
-  line-height: 1.6;
+  font-size: 0.85rem;
+  line-height: 1.7;
   color: var(--gray);
 }
 
-/* ========================================================================
-   CLIENT PORTFOLIO — MARQUEE
-   ======================================================================== */
+/* Hover state border glow */
+.tilt-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid transparent;
+  transition: border-color 0.3s ease;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.tilt-card:hover::before {
+  border-color: rgba(230, 59, 46, 0.3);
+}
+
+
+/* ============================================================================
+   CLIENT PORTFOLIO - MARQUEE
+   ============================================================================ */
 .clients-section {
   position: relative;
   background: var(--black);
@@ -862,19 +1313,31 @@ a, button, input, textarea {
   letter-spacing: 0.25em;
   text-transform: uppercase;
   color: var(--accent);
-  padding-left: clamp(2rem, 6vw, 6rem);
+  padding-left: var(--container-padding);
   margin-bottom: 3rem;
+}
+
+.clients-subtext {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.2rem, 2vw, 1.8rem);
+  color: var(--gray);
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+  margin-bottom: 3rem;
+  max-width: 600px;
 }
 
 .marquee-container {
   overflow: hidden;
   padding: 1.5rem 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.marquee-container:last-of-type {
-  margin-top: 1rem;
+.marquee-container + .marquee-container {
+  margin-top: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .marquee-track {
@@ -887,26 +1350,47 @@ a, button, input, textarea {
 .marquee-item {
   font-family: var(--font-body);
   font-weight: 800;
-  font-size: clamp(2rem, 5vw, 4rem);
+  font-size: clamp(1.8rem, 5vw, 4rem);
   color: var(--white);
   text-transform: uppercase;
   letter-spacing: -0.01em;
   flex-shrink: 0;
-  padding: 0 1rem;
+  padding: 0 0.75rem;
+  transition: color 0.3s ease;
+}
+
+.marquee-item:hover {
+  color: var(--accent);
 }
 
 .marquee-dot {
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
+  min-width: 10px;
   border-radius: 50%;
   background: var(--accent);
   flex-shrink: 0;
-  margin: 0 1.5rem;
+  margin: 0 1.25rem;
 }
 
-/* ========================================================================
-   CONTACT — FULL BLEED SPLIT
-   ======================================================================== */
+/* Second row is lighter */
+.marquee-container:nth-child(3) .marquee-item {
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 600;
+}
+
+.marquee-container:nth-child(3) .marquee-item:hover {
+  color: var(--accent);
+}
+
+.marquee-container:nth-child(3) .marquee-dot {
+  background: rgba(230, 59, 46, 0.4);
+}
+
+
+/* ============================================================================
+   CONTACT - FULL BLEED SPLIT
+   ============================================================================ */
 .contact-section {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -921,24 +1405,44 @@ a, button, input, textarea {
   justify-content: center;
   padding: clamp(3rem, 6vw, 6rem);
   position: relative;
+  overflow: hidden;
 }
 
+/* Red dividing line */
 .contact-left::after {
   content: '';
   position: absolute;
   top: 0;
   right: 0;
-  width: 3px;
+  width: var(--border-weight);
   height: 100%;
   background: var(--accent);
+  z-index: 2;
+}
+
+/* Decorative large text in background */
+.contact-left-deco {
+  position: absolute;
+  bottom: -5%;
+  left: -5%;
+  font-family: var(--font-body);
+  font-weight: 100;
+  font-size: clamp(8rem, 20vw, 20rem);
+  color: rgba(255, 255, 255, 0.02);
+  pointer-events: none;
+  user-select: none;
+  line-height: 0.85;
+  letter-spacing: -0.04em;
 }
 
 .contact-headline {
   font-family: var(--font-display);
   font-style: italic;
-  font-size: clamp(3rem, 5vw, 5rem);
+  font-size: clamp(2.8rem, 5vw, 5rem);
   line-height: 1.05;
   color: var(--white);
+  position: relative;
+  z-index: 1;
 }
 
 .contact-headline span {
@@ -949,10 +1453,12 @@ a, button, input, textarea {
   font-family: var(--font-body);
   font-weight: 400;
   font-size: 0.95rem;
-  line-height: 1.7;
+  line-height: 1.75;
   color: var(--gray);
   margin-top: 2rem;
-  max-width: 400px;
+  max-width: 380px;
+  position: relative;
+  z-index: 1;
 }
 
 .contact-info {
@@ -960,6 +1466,8 @@ a, button, input, textarea {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  position: relative;
+  z-index: 1;
 }
 
 .contact-info a {
@@ -970,12 +1478,26 @@ a, button, input, textarea {
   text-decoration: none;
   letter-spacing: 0.05em;
   transition: color 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .contact-info a:hover {
   color: var(--accent);
 }
 
+.contact-info-label {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-right: 0.5rem;
+}
+
+/* Right form side */
 .contact-right {
   background: var(--white);
   display: flex;
@@ -987,14 +1509,22 @@ a, button, input, textarea {
 .form-title {
   font-family: var(--font-body);
   font-weight: 800;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   letter-spacing: -0.01em;
-  margin-bottom: 3rem;
+  margin-bottom: 0.5rem;
   color: var(--black);
 }
 
+.form-subtitle {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--gray);
+  margin-bottom: 3rem;
+}
+
 .form-group {
-  margin-bottom: 2rem;
+  margin-bottom: 1.75rem;
   position: relative;
 }
 
@@ -1002,11 +1532,11 @@ a, button, input, textarea {
   display: block;
   font-family: var(--font-body);
   font-weight: 700;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--black);
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.6rem;
 }
 
 .form-group input,
@@ -1022,9 +1552,17 @@ a, button, input, textarea {
   padding: 0.75rem 0;
   color: var(--black);
   outline: none;
-  transition: border-color 0.3s ease;
+  transition: border-color 0.4s ease;
   border-radius: 0;
   -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: var(--gray-light);
+  font-weight: 300;
 }
 
 .form-group input:focus,
@@ -1040,15 +1578,17 @@ a, button, input, textarea {
 
 .form-group select {
   cursor: none;
+  background: transparent;
 }
 
 .form-error {
   font-family: var(--font-body);
   font-weight: 500;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: var(--accent);
-  margin-top: 0.5rem;
+  margin-top: 0.4rem;
   display: none;
+  letter-spacing: 0.02em;
 }
 
 .form-group.error .form-error {
@@ -1060,19 +1600,22 @@ a, button, input, textarea {
   border-bottom-color: var(--accent);
 }
 
+/* Submit button */
 .submit-btn {
   display: inline-block;
   background: var(--black);
   color: var(--white);
   font-family: var(--font-body);
   font-weight: 700;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   border: none;
   padding: 1.25rem 3rem;
   margin-top: 1rem;
-  transition: background 0.4s ease, color 0.4s ease;
+  transition: background 0.4s var(--ease-out-expo),
+              color 0.4s ease,
+              transform 0.2s ease;
   position: relative;
   overflow: hidden;
 }
@@ -1082,67 +1625,95 @@ a, button, input, textarea {
   color: var(--white);
 }
 
+.submit-btn:active {
+  transform: scale(0.98);
+}
+
+/* Success message */
 .form-success {
   display: none;
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: 1.5rem;
-  color: var(--accent);
-  margin-top: 2rem;
+  padding: 1.5rem 0;
 }
 
 .form-success.show {
   display: block;
 }
 
-/* ========================================================================
+.form-success-text {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.4rem;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.form-success-sub {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.9rem;
+  color: var(--gray);
+}
+
+
+/* ============================================================================
    FOOTER
-   ======================================================================== */
+   ============================================================================ */
 .footer {
   position: relative;
   background: var(--black);
-  padding: clamp(4rem, 8vh, 8rem) clamp(2rem, 6vw, 6rem) clamp(2rem, 4vh, 4rem);
+  padding: clamp(4rem, 8vh, 8rem) var(--container-padding) clamp(2rem, 4vh, 3rem);
   overflow: hidden;
 }
 
 .footer-watermark {
   position: absolute;
-  bottom: -5%;
+  bottom: -8%;
   left: 50%;
   transform: translateX(-50%);
   font-family: var(--font-body);
   font-weight: 100;
-  font-size: clamp(6rem, 18vw, 20rem);
+  font-size: clamp(6rem, 18vw, 22rem);
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.03);
+  color: rgba(255, 255, 255, 0.02);
   white-space: nowrap;
   pointer-events: none;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.04em;
   line-height: 1;
+  user-select: none;
+}
+
+.footer-divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin-bottom: clamp(3rem, 6vh, 5rem);
 }
 
 .footer-top {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: 3rem;
-  padding-bottom: 4rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  gap: clamp(2rem, 4vw, 4rem);
+  padding-bottom: clamp(3rem, 6vh, 5rem);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   position: relative;
   z-index: 2;
 }
 
 .footer-brand {
-  max-width: 350px;
+  max-width: 320px;
 }
 
 .footer-brand-name {
   font-family: var(--font-body);
   font-weight: 900;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--white);
   margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.15em;
 }
 
 .footer-brand-name span {
@@ -1153,14 +1724,14 @@ a, button, input, textarea {
   font-family: var(--font-body);
   font-weight: 400;
   font-size: 0.85rem;
-  line-height: 1.7;
+  line-height: 1.75;
   color: var(--gray);
 }
 
 .footer-col-title {
   font-family: var(--font-body);
   font-weight: 700;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--white);
@@ -1172,10 +1743,10 @@ a, button, input, textarea {
   display: block;
   font-family: var(--font-body);
   font-weight: 400;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   color: var(--gray);
   text-decoration: none;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.7rem;
   transition: color 0.3s ease;
   line-height: 1.5;
 }
@@ -1196,37 +1767,43 @@ a, button, input, textarea {
 .footer-bottom p {
   font-family: var(--font-body);
   font-weight: 400;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: var(--gray);
+  letter-spacing: 0.05em;
 }
 
 .footer-bottom p span {
   color: var(--accent);
 }
 
-/* ========================================================================
+
+/* ============================================================================
    BACK TO TOP
-   ======================================================================== */
+   ============================================================================ */
 .back-to-top {
   position: fixed;
   bottom: 2rem;
   right: 2rem;
   font-family: var(--font-body);
   font-weight: 700;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--white);
   background: var(--black);
-  border: 2px solid var(--white);
-  padding: 0.75rem 1.25rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 0.7rem 1.1rem;
   text-decoration: none;
   z-index: 9990;
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.4s ease, transform 0.4s ease, background 0.3s ease, color 0.3s ease;
+  transition: opacity 0.4s ease,
+              transform 0.4s ease,
+              background 0.3s ease,
+              border-color 0.3s ease,
+              color 0.3s ease;
   pointer-events: none;
-  mix-blend-mode: normal;
+  line-height: 1;
 }
 
 .back-to-top.visible {
@@ -1238,26 +1815,44 @@ a, button, input, textarea {
 .back-to-top:hover {
   background: var(--accent);
   border-color: var(--accent);
+  color: var(--white);
 }
 
-/* ========================================================================
+
+/* ============================================================================
    HORIZONTAL RULES (Stretch targets)
-   ======================================================================== */
+   ============================================================================ */
 .section-hr {
   width: 100%;
-  height: 3px;
+  height: var(--border-weight);
   background: var(--black);
   border: none;
   display: block;
 }
 
 .section-hr.light {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.06);
 }
 
-/* ========================================================================
-   RESPONSIVE
-   ======================================================================== */
+
+/* ============================================================================
+   SCRAMBLE TEXT
+   ============================================================================ */
+.scramble-text {
+  display: inline-block;
+}
+
+.scramble-text.scrambling {
+  font-family: var(--mono);
+  letter-spacing: 0.05em;
+}
+
+
+/* ============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================ */
+
+/* Tablet */
 @media (max-width: 1024px) {
   .why-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -1265,35 +1860,53 @@ a, button, input, textarea {
 
   .footer-top {
     grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
   }
 
   .about-grid {
     grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .service-panel {
+    padding-right: var(--container-padding);
   }
 }
 
+/* Mobile */
 @media (max-width: 768px) {
+  /* Restore native cursor on mobile/touch */
   html, body { cursor: auto; }
-  a, button, input, textarea { cursor: auto; }
-  .cursor { display: none; }
+  a, button, input, textarea, select, [data-tilt] { cursor: auto; }
+  .cursor { display: none !important; }
 
   .nav-links { display: none; }
   .nav-burger { display: flex; }
 
   .nav {
-    padding: 1.25rem 1.5rem;
+    padding: 1rem 1.5rem;
   }
 
   .hero {
     padding: 0 1.5rem;
+    min-height: 600px;
+  }
+
+  .hero::before {
+    background-size: 50px 50px;
   }
 
   .hero-badge {
     display: none;
   }
 
+  .hero-corner {
+    display: none;
+  }
+
   .hero-word {
-    font-size: clamp(3.5rem, 16vw, 8rem);
+    font-size: clamp(3.2rem, 16vw, 7rem);
+    line-height: 0.9;
   }
 
   .about-stats {
@@ -1301,7 +1914,11 @@ a, button, input, textarea {
     gap: 1rem;
   }
 
-  /* mobile: services stack vertically */
+  .stat-number {
+    font-size: clamp(2rem, 6vw, 2.5rem);
+  }
+
+  /* Mobile: services vertical stack */
   .services-wrapper {
     height: auto !important;
   }
@@ -1309,11 +1926,16 @@ a, button, input, textarea {
   .services-sticky {
     position: relative;
     height: auto;
+    overflow: visible;
   }
 
   .services-track {
     flex-direction: column;
     transform: none !important;
+  }
+
+  .services-progress {
+    display: none;
   }
 
   .service-panel {
@@ -1325,16 +1947,21 @@ a, button, input, textarea {
   }
 
   .service-number {
-    font-size: clamp(5rem, 20vw, 8rem);
+    font-size: clamp(5rem, 22vw, 8rem);
     position: relative;
     top: auto;
     right: auto;
     transform: none;
-    margin-bottom: -1rem;
+    margin-bottom: -1.5rem;
   }
 
   .why-grid {
     grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .tilt-card {
+    min-height: 220px;
   }
 
   .contact-section {
@@ -1343,10 +1970,14 @@ a, button, input, textarea {
 
   .contact-left::after {
     width: 100%;
-    height: 3px;
+    height: var(--border-weight);
     top: auto;
     bottom: 0;
     right: 0;
+  }
+
+  .contact-left-deco {
+    display: none;
   }
 
   .footer-top {
@@ -1356,15 +1987,23 @@ a, button, input, textarea {
 
   .footer-bottom {
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.75rem;
     text-align: center;
   }
 
   .marquee-item {
     font-size: clamp(1.5rem, 5vw, 2.5rem);
   }
+
+  .marquee-dot {
+    width: 8px;
+    height: 8px;
+    min-width: 8px;
+    margin: 0 0.75rem;
+  }
 }
 
+/* Small mobile */
 @media (max-width: 480px) {
   .hero-word {
     font-size: clamp(2.8rem, 15vw, 5rem);
@@ -1372,43 +2011,105 @@ a, button, input, textarea {
 
   .about-stats {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
 
   .stat-number {
     font-size: 2.5rem;
   }
+
+  .contact-headline {
+    font-size: clamp(2.2rem, 8vw, 3rem);
+  }
 }
 
-/* ========================================================================
-   UTILITY / SCRAMBLE
-   ======================================================================== */
-.scramble-text {
-  display: inline-block;
+/* Prefers reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .hero-char {
+    transform: none;
+    opacity: 1;
+  }
+
+  .hero-subtitle-inner,
+  .hero-tagline-inner {
+    transform: none;
+    opacity: 1;
+  }
+
+  .reveal,
+  .reveal-left,
+  .reveal-scale {
+    opacity: 1;
+    transform: none;
+  }
 }
 
-.scramble-text.scrambling {
-  font-family: var(--mono);
+/* Print styles */
+@media print {
+  .cursor,
+  .progress-bar,
+  .loader,
+  .nav,
+  .back-to-top,
+  .hero-scroll-indicator,
+  .hero-badge,
+  .hero-corner,
+  .section-transition {
+    display: none !important;
+  }
+
+  body {
+    color: #000;
+    background: #fff;
+  }
+
+  .hero {
+    height: auto;
+    min-height: auto;
+    padding: 2rem;
+    background: #000;
+    page-break-after: always;
+  }
 }
 </style>
 </head>
 <body>
 
-<!-- CUSTOM CURSOR -->
+<!-- ====================================================================
+     CUSTOM CURSOR
+     ==================================================================== -->
 <div class="cursor" id="cursor"></div>
 
-<!-- PROGRESS BAR -->
+<!-- ====================================================================
+     PROGRESS BAR
+     ==================================================================== -->
 <div class="progress-bar" id="progressBar"></div>
 
-<!-- LOADING SCREEN -->
+<!-- ====================================================================
+     LOADING SCREEN
+     ==================================================================== -->
 <div class="loader" id="loader">
   <div class="loader-top"></div>
   <div class="loader-bottom"></div>
   <div class="loader-line" id="loaderLine"></div>
+  <div class="loader-text" id="loaderText">Native Command Consulting</div>
 </div>
 
-<!-- NAVIGATION -->
-<nav class="nav" id="nav">
-  <a href="#hero" class="nav-logo"><span>N</span>CC</a>
+<!-- ====================================================================
+     NAVIGATION
+     ==================================================================== -->
+<nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+  <a href="#hero" class="nav-logo" aria-label="Native Command Consulting home">
+    <span>N</span>CC
+  </a>
   <ul class="nav-links">
     <li><a href="#about" class="scramble-text" data-text="About">About</a></li>
     <li><a href="#services" class="scramble-text" data-text="Services">Services</a></li>
@@ -1416,61 +2117,83 @@ a, button, input, textarea {
     <li><a href="#clients" class="scramble-text" data-text="Clients">Clients</a></li>
     <li><a href="#contact" class="scramble-text" data-text="Contact">Contact</a></li>
   </ul>
-  <button class="nav-burger" id="navBurger" aria-label="Toggle menu">
+  <button class="nav-burger" id="navBurger" aria-label="Toggle menu" aria-expanded="false">
     <span></span>
     <span></span>
     <span></span>
   </button>
 </nav>
 
-<!-- MOBILE MENU -->
-<div class="mobile-menu" id="mobileMenu">
+<!-- ====================================================================
+     MOBILE MENU
+     ==================================================================== -->
+<div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Mobile navigation">
   <a href="#about" class="scramble-text" data-text="About">About</a>
   <a href="#services" class="scramble-text" data-text="Services">Services</a>
   <a href="#why" class="scramble-text" data-text="Differentiators">Differentiators</a>
   <a href="#clients" class="scramble-text" data-text="Clients">Clients</a>
   <a href="#contact" class="scramble-text" data-text="Contact">Contact</a>
+  <div class="mobile-menu-footer">
+    <span>(605) 222-4416</span>
+    <span>Pierre, SD</span>
+  </div>
 </div>
 
-<!-- ================================================================
+<!-- ====================================================================
      HERO
-     ================================================================ -->
+     ==================================================================== -->
 <section class="hero" id="hero">
+  <div class="hero-corner hero-corner--tl"></div>
+  <div class="hero-corner hero-corner--br"></div>
+
   <div class="hero-typography">
     <div class="hero-line">
-      <div class="hero-word" id="heroNative"></div>
+      <div class="hero-word" id="heroNative" aria-label="Native"></div>
     </div>
     <div class="hero-line">
-      <div class="hero-word command-word" id="heroCommand"></div>
+      <div class="hero-word command-word" id="heroCommand" aria-label="Command"></div>
     </div>
   </div>
+
   <div class="hero-subtitle">
     <div class="hero-subtitle-inner" id="heroSubtitle">
       Revenue Cycle Management for tribal health care
     </div>
   </div>
-  <div class="hero-badge">
+
+  <div class="hero-tagline">
+    <div class="hero-tagline-inner" id="heroTagline">
+      100% Native American-Owned &amp; Operated &mdash; Since 2013
+    </div>
+  </div>
+
+  <div class="hero-badge" aria-hidden="true">
     <div class="hero-badge-inner">
       <span class="hero-badge-text">100%<br>Native<br>American<br>Owned</span>
     </div>
   </div>
-  <div class="hero-scroll-indicator">
+
+  <div class="hero-scroll-indicator" aria-hidden="true">
     <span>Scroll</span>
     <div class="scroll-line"></div>
   </div>
-  <div class="hero-year">EST. 2013 &mdash; PIERRE, SD</div>
+
+  <div class="hero-year" aria-hidden="true">EST. 2013 &mdash; PIERRE, SD</div>
 </section>
 
-<!-- TRANSITION -->
+<!-- Section Transition -->
 <div class="section-transition accent-sweep" data-transition>
   <div class="section-transition-fill"></div>
 </div>
 
-<!-- ================================================================
+<!-- ====================================================================
      ABOUT
-     ================================================================ -->
+     ==================================================================== -->
 <section class="about" id="about">
+  <div class="about-deco" aria-hidden="true">NCC</div>
+
   <div class="about-label stretch-element scramble-text" data-text="Who We Are">Who We Are</div>
+
   <div class="about-grid">
     <div class="about-headline reveal">
       Improving the quality of health care for <em>Native American</em> communities
@@ -1480,155 +2203,187 @@ a, button, input, textarea {
         Native Command Consulting is a 100% Native American-owned-and-operated professional consulting company based in Pierre, South Dakota. Since 2013, we have provided specialized Revenue Cycle Management services to Indian Health Service (IHS) and tribal health care facilities across the nation.
       </p>
       <p>
-        Our mission is singular and unwavering: to improve the quality of health care for Native American communities by ensuring their facilities operate with maximum efficiency and financial sustainability.
+        Our mission is singular and unwavering: to improve the quality of health care for Native American communities by ensuring their facilities operate with maximum efficiency and financial sustainability. We understand the unique challenges because we come from these communities.
       </p>
     </div>
   </div>
+
   <div class="about-stats">
-    <div class="reveal reveal-delay-1">
+    <div class="stat-item reveal reveal-delay-1">
       <div class="stat-number" data-count="10">0</div>
       <div class="stat-label">Years of Excellence</div>
     </div>
-    <div class="reveal reveal-delay-2">
+    <div class="stat-item reveal reveal-delay-2">
       <div class="stat-number" data-count="7">0</div>
       <div class="stat-label">Facility Partners</div>
     </div>
-    <div class="reveal reveal-delay-3">
+    <div class="stat-item reveal reveal-delay-3">
       <div class="stat-number" data-count="5">0</div>
       <div class="stat-label">States Served</div>
     </div>
   </div>
 </section>
 
-<!-- TRANSITION -->
+<!-- Section Transition -->
 <div class="section-transition white-to-black" data-transition>
   <div class="section-transition-fill"></div>
 </div>
 
-<!-- ================================================================
-     SERVICES — HORIZONTAL SCROLL
-     ================================================================ -->
+<!-- ====================================================================
+     SERVICES - HORIZONTAL SCROLL
+     ==================================================================== -->
 <section class="services-wrapper" id="services">
   <div class="services-sticky">
     <div class="services-header">
       <div class="services-header-label scramble-text" data-text="Our Services">Our Services</div>
     </div>
+
+    <div class="services-progress" id="servicesProgress">
+      <div class="services-progress-dot active" data-panel="0"></div>
+      <div class="services-progress-dot" data-panel="1"></div>
+      <div class="services-progress-dot" data-panel="2"></div>
+      <div class="services-progress-dot" data-panel="3"></div>
+    </div>
+
     <div class="services-track" id="servicesTrack">
-      <!-- Panel 01 -->
+      <!-- Panel 01: Health Information Management -->
       <div class="service-panel">
-        <div class="service-number">01</div>
+        <div class="service-number" aria-hidden="true">01</div>
         <div class="service-panel-counter">01 / 04</div>
         <div class="service-accent-line stretch-element"></div>
         <div class="service-name">Health Information Management</div>
         <div class="service-description">
           Comprehensive health information management services ensuring accurate patient records, regulatory compliance, and seamless data governance across IHS and tribal health care facilities. We bring structure and clarity to your most critical asset: patient data.
         </div>
+        <span class="service-tag scramble-text" data-text="Learn More">Learn More</span>
       </div>
-      <!-- Panel 02 -->
+
+      <!-- Panel 02: Medical Coding & Billing -->
       <div class="service-panel">
-        <div class="service-number">02</div>
+        <div class="service-number" aria-hidden="true">02</div>
         <div class="service-panel-counter">02 / 04</div>
         <div class="service-accent-line stretch-element"></div>
-        <div class="service-name">Medical Coding & Billing</div>
+        <div class="service-name">Medical Coding &amp; Billing</div>
         <div class="service-description">
           Expert medical coding and billing services delivered by specialized coders who understand the unique requirements of tribal and IHS facilities. Maximize revenue capture while maintaining absolute coding accuracy and compliance with federal standards.
         </div>
+        <span class="service-tag scramble-text" data-text="Learn More">Learn More</span>
       </div>
-      <!-- Panel 03 -->
+
+      <!-- Panel 03: Electronic Content Management -->
       <div class="service-panel">
-        <div class="service-number">03</div>
+        <div class="service-number" aria-hidden="true">03</div>
         <div class="service-panel-counter">03 / 04</div>
         <div class="service-accent-line stretch-element"></div>
         <div class="service-name">Electronic Content Management</div>
         <div class="service-description">
           Modern electronic content management solutions that digitize, organize, and secure your facility's documentation. Streamline workflows, reduce paper dependency, and enable instant access to critical information with enterprise-grade systems.
         </div>
+        <span class="service-tag scramble-text" data-text="Learn More">Learn More</span>
       </div>
-      <!-- Panel 04 -->
+
+      <!-- Panel 04: Business Process Engineering -->
       <div class="service-panel">
-        <div class="service-number">04</div>
+        <div class="service-number" aria-hidden="true">04</div>
         <div class="service-panel-counter">04 / 04</div>
         <div class="service-accent-line stretch-element"></div>
         <div class="service-name">Business Process Engineering</div>
         <div class="service-description">
           Strategic business process engineering that transforms operational inefficiencies into streamlined, high-performance systems. We analyze, redesign, and implement processes that drive measurable improvements in your facility's revenue cycle.
         </div>
+        <span class="service-tag scramble-text" data-text="Learn More">Learn More</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- TRANSITION -->
+<!-- Section Transition -->
 <div class="section-transition accent-sweep" data-transition>
   <div class="section-transition-fill"></div>
 </div>
 
-<!-- ================================================================
+<!-- ====================================================================
      WHY CHOOSE US
-     ================================================================ -->
+     ==================================================================== -->
 <section class="why-section" id="why">
   <div class="why-label scramble-text" data-text="Why Choose Us">Why Choose Us</div>
+
   <div class="why-headline reveal">
     We don't just consult. We <em>command</em> results.
   </div>
+
   <div class="why-grid">
+    <!-- Card 01 -->
     <div class="tilt-card reveal reveal-delay-1" data-tilt>
       <div class="tilt-card-shine"></div>
-      <div class="tilt-card-number">01</div>
+      <div class="tilt-card-number" aria-hidden="true">01</div>
       <div class="tilt-card-icon"></div>
       <div class="tilt-card-title">24/7 Capability</div>
-      <div class="tilt-card-text">Round-the-clock operational readiness ensures your facility never waits. Our team is always available, across every time zone, to keep your revenue cycle moving.</div>
+      <div class="tilt-card-text">Round-the-clock operational readiness ensures your facility never waits. Our team is always available, across every time zone, to keep your revenue cycle moving without interruption.</div>
     </div>
+
+    <!-- Card 02 -->
     <div class="tilt-card reveal reveal-delay-2" data-tilt>
       <div class="tilt-card-shine"></div>
-      <div class="tilt-card-number">02</div>
+      <div class="tilt-card-number" aria-hidden="true">02</div>
       <div class="tilt-card-icon"></div>
       <div class="tilt-card-title">Innovative Technology</div>
-      <div class="tilt-card-text">We leverage cutting-edge tools and platforms to deliver smarter, faster results. Technology isn't an add-on for us; it's the backbone of every solution we engineer.</div>
+      <div class="tilt-card-text">We leverage cutting-edge tools and platforms to deliver smarter, faster results. Technology isn't an add-on for us; it's the backbone of every solution we engineer for your facility.</div>
     </div>
+
+    <!-- Card 03 -->
     <div class="tilt-card reveal reveal-delay-3" data-tilt>
       <div class="tilt-card-shine"></div>
-      <div class="tilt-card-number">03</div>
+      <div class="tilt-card-number" aria-hidden="true">03</div>
       <div class="tilt-card-icon"></div>
       <div class="tilt-card-title">Exceptional Coders</div>
-      <div class="tilt-card-text">Our medical coding professionals are among the best in the industry. Rigorously trained, continuously certified, and laser-focused on accuracy in every claim.</div>
+      <div class="tilt-card-text">Our medical coding professionals are among the best in the industry. Rigorously trained, continuously certified, and laser-focused on accuracy in every single claim processed.</div>
     </div>
+
+    <!-- Card 04 -->
     <div class="tilt-card reveal reveal-delay-1" data-tilt>
       <div class="tilt-card-shine"></div>
-      <div class="tilt-card-number">04</div>
+      <div class="tilt-card-number" aria-hidden="true">04</div>
       <div class="tilt-card-icon"></div>
       <div class="tilt-card-title">Specialized Coders</div>
-      <div class="tilt-card-text">Deep specialization in IHS and tribal health care coding. Our team understands the nuances, regulations, and unique billing requirements that generic firms miss.</div>
+      <div class="tilt-card-text">Deep specialization in IHS and tribal health care coding. Our team understands the nuances, regulations, and unique billing requirements that generic consulting firms simply miss.</div>
     </div>
+
+    <!-- Card 05 -->
     <div class="tilt-card reveal reveal-delay-2" data-tilt>
       <div class="tilt-card-shine"></div>
-      <div class="tilt-card-number">05</div>
+      <div class="tilt-card-number" aria-hidden="true">05</div>
       <div class="tilt-card-icon"></div>
       <div class="tilt-card-title">Extremely Flexible</div>
-      <div class="tilt-card-text">No rigid contracts or one-size-fits-all packages. We adapt to your facility's unique needs, scale up or down as required, and pivot when priorities shift.</div>
+      <div class="tilt-card-text">No rigid contracts or one-size-fits-all packages. We adapt to your facility's unique needs, scale up or down as required, and pivot immediately when priorities shift.</div>
     </div>
+
+    <!-- Card 06 -->
     <div class="tilt-card reveal reveal-delay-3" data-tilt>
       <div class="tilt-card-shine"></div>
-      <div class="tilt-card-number">06</div>
+      <div class="tilt-card-number" aria-hidden="true">06</div>
       <div class="tilt-card-icon"></div>
       <div class="tilt-card-title">Extensive Communication</div>
-      <div class="tilt-card-text">Transparent, proactive, and thorough communication at every stage. You'll always know exactly where your projects stand and what's coming next.</div>
+      <div class="tilt-card-text">Transparent, proactive, and thorough communication at every stage. You'll always know exactly where your projects stand, what's been accomplished, and what's coming next.</div>
     </div>
   </div>
 </section>
 
-<!-- TRANSITION -->
+<!-- Section Transition -->
 <div class="section-transition black-to-white" data-transition>
   <div class="section-transition-fill"></div>
 </div>
 
-<!-- ================================================================
-     CLIENT PORTFOLIO — MARQUEE
-     ================================================================ -->
+<!-- ====================================================================
+     CLIENT PORTFOLIO - MARQUEE
+     ==================================================================== -->
 <section class="clients-section" id="clients">
   <div class="clients-label scramble-text" data-text="Client Portfolio">Client Portfolio</div>
+  <div class="clients-subtext reveal">
+    Trusted by leading IHS and tribal health care facilities across the nation.
+  </div>
 
-  <!-- Row 1 — scrolls left -->
+  <!-- Row 1: Facility names, scrolls left -->
   <div class="marquee-container">
     <div class="marquee-track" id="marquee1" data-direction="left" data-speed="0.5">
       <span class="marquee-item">Maniilaq Health Center</span>
@@ -1645,7 +2400,7 @@ a, button, input, textarea {
       <span class="marquee-dot"></span>
       <span class="marquee-item">Rosebud Sioux Tribe</span>
       <span class="marquee-dot"></span>
-      <!-- Duplicate for seamless loop -->
+      <!-- Duplicate set for seamless loop -->
       <span class="marquee-item">Maniilaq Health Center</span>
       <span class="marquee-dot"></span>
       <span class="marquee-item">Northern Navajo Medical Center</span>
@@ -1663,7 +2418,7 @@ a, button, input, textarea {
     </div>
   </div>
 
-  <!-- Row 2 — scrolls right -->
+  <!-- Row 2: Regions/keywords, scrolls right -->
   <div class="marquee-container">
     <div class="marquee-track" id="marquee2" data-direction="right" data-speed="0.35">
       <span class="marquee-item">Alaska</span>
@@ -1678,9 +2433,9 @@ a, button, input, textarea {
       <span class="marquee-dot"></span>
       <span class="marquee-item">Tribal Health Care</span>
       <span class="marquee-dot"></span>
-      <span class="marquee-item">Revenue Cycle Management</span>
+      <span class="marquee-item">Revenue Cycle</span>
       <span class="marquee-dot"></span>
-      <!-- Duplicate for seamless loop -->
+      <!-- Duplicate set for seamless loop -->
       <span class="marquee-item">Alaska</span>
       <span class="marquee-dot"></span>
       <span class="marquee-item">New Mexico</span>
@@ -1693,96 +2448,129 @@ a, button, input, textarea {
       <span class="marquee-dot"></span>
       <span class="marquee-item">Tribal Health Care</span>
       <span class="marquee-dot"></span>
-      <span class="marquee-item">Revenue Cycle Management</span>
+      <span class="marquee-item">Revenue Cycle</span>
       <span class="marquee-dot"></span>
     </div>
   </div>
 </section>
 
-<!-- ================================================================
+<!-- ====================================================================
      CONTACT
-     ================================================================ -->
+     ==================================================================== -->
 <section class="contact-section" id="contact">
   <div class="contact-left">
+    <div class="contact-left-deco" aria-hidden="true">NCC</div>
+
     <div class="contact-headline reveal">
       <span>Let's</span>
       <span>Build</span>
       <span>Something</span>
     </div>
+
     <div class="contact-subtext reveal reveal-delay-1">
-      Ready to transform your facility's revenue cycle? We're here. Let's talk about what Native Command can do for your community.
+      Ready to transform your facility's revenue cycle? We're here to listen, strategize, and deliver. Let's talk about what Native Command can do for your community.
     </div>
+
     <div class="contact-info reveal reveal-delay-2">
-      <a href="tel:6052224416">(605) 222-4416</a>
-      <a href="mailto:info@nativecommand.com">info@nativecommand.com</a>
-      <a href="https://maps.google.com/?q=122+N+Huron+Ave+Pierre+SD+57501" target="_blank" rel="noopener">122 N. Huron Ave, Pierre, SD 57501</a>
+      <a href="tel:6052224416">
+        <span class="contact-info-label">Phone</span>
+        (605) 222-4416
+      </a>
+      <a href="mailto:info@nativecommand.com">
+        <span class="contact-info-label">Email</span>
+        info@nativecommand.com
+      </a>
+      <a href="https://maps.google.com/?q=122+N+Huron+Ave+Pierre+SD+57501" target="_blank" rel="noopener noreferrer">
+        <span class="contact-info-label">Office</span>
+        122 N. Huron Ave, Pierre, SD 57501
+      </a>
     </div>
   </div>
+
   <div class="contact-right">
-    <div class="form-title">Send a Message</div>
+    <div class="form-title reveal">Send a Message</div>
+    <div class="form-subtitle reveal reveal-delay-1">We respond within 24 hours.</div>
+
     <form id="contactForm" novalidate>
-      <div class="form-group">
+      <div class="form-group reveal reveal-delay-1">
         <label for="formName">Your Name</label>
-        <input type="text" id="formName" name="name" required autocomplete="name">
+        <input type="text" id="formName" name="name" required autocomplete="name" placeholder="Full name">
         <div class="form-error">Please enter your name</div>
       </div>
-      <div class="form-group">
+
+      <div class="form-group reveal reveal-delay-2">
         <label for="formEmail">Email Address</label>
-        <input type="email" id="formEmail" name="email" required autocomplete="email">
+        <input type="email" id="formEmail" name="email" required autocomplete="email" placeholder="email@organization.com">
         <div class="form-error">Please enter a valid email address</div>
       </div>
-      <div class="form-group">
+
+      <div class="form-group reveal reveal-delay-2">
         <label for="formOrg">Organization</label>
-        <input type="text" id="formOrg" name="organization" autocomplete="organization">
+        <input type="text" id="formOrg" name="organization" autocomplete="organization" placeholder="Facility or organization name">
         <div class="form-error"></div>
       </div>
-      <div class="form-group">
+
+      <div class="form-group reveal reveal-delay-3">
         <label for="formService">Service Interest</label>
         <select id="formService" name="service">
           <option value="" disabled selected>Select a service</option>
           <option value="him">Health Information Management</option>
-          <option value="coding">Medical Coding & Billing</option>
+          <option value="coding">Medical Coding &amp; Billing</option>
           <option value="ecm">Electronic Content Management</option>
           <option value="bpe">Business Process Engineering</option>
           <option value="other">Other / General Inquiry</option>
         </select>
         <div class="form-error"></div>
       </div>
-      <div class="form-group">
+
+      <div class="form-group reveal reveal-delay-3">
         <label for="formMessage">Message</label>
-        <textarea id="formMessage" name="message" rows="4" required></textarea>
+        <textarea id="formMessage" name="message" rows="4" required placeholder="Tell us about your needs..."></textarea>
         <div class="form-error">Please enter a message</div>
       </div>
-      <button type="submit" class="submit-btn scramble-text" data-text="Send Message">Send Message</button>
-      <div class="form-success" id="formSuccess">Thank you. We'll be in touch shortly.</div>
+
+      <button type="submit" class="submit-btn scramble-text reveal reveal-delay-4" data-text="Send Message">Send Message</button>
+
+      <div class="form-success" id="formSuccess">
+        <div class="form-success-text">Message received.</div>
+        <div class="form-success-sub">We'll be in touch within 24 hours. Thank you.</div>
+      </div>
     </form>
   </div>
 </section>
 
-<!-- ================================================================
+<!-- ====================================================================
      FOOTER
-     ================================================================ -->
+     ==================================================================== -->
 <footer class="footer" id="footer">
-  <div class="footer-watermark">NATIVE COMMAND</div>
+  <div class="footer-watermark" aria-hidden="true">NATIVE COMMAND</div>
+
+  <div class="footer-divider"></div>
+
   <div class="footer-top">
     <div class="footer-brand">
-      <div class="footer-brand-name">Native Command <span>Consulting</span></div>
+      <div class="footer-brand-name">
+        Native Command <span>Consulting</span>
+      </div>
       <p>100% Native American-owned-and-operated professional consulting services. Dedicated to improving the quality of health care for Native American communities since 2013.</p>
     </div>
+
     <div class="footer-col">
       <div class="footer-col-title">Services</div>
       <a href="#services">Health Information Mgmt</a>
-      <a href="#services">Medical Coding & Billing</a>
+      <a href="#services">Medical Coding &amp; Billing</a>
       <a href="#services">Electronic Content Mgmt</a>
       <a href="#services">Business Process Engineering</a>
     </div>
+
     <div class="footer-col">
       <div class="footer-col-title">Company</div>
       <a href="#about">About Us</a>
-      <a href="#why">Differentiators</a>
+      <a href="#why">Our Differentiators</a>
       <a href="#clients">Client Portfolio</a>
       <a href="#contact">Contact</a>
     </div>
+
     <div class="footer-col">
       <div class="footer-col-title">Contact</div>
       <p>(605) 222-4416</p>
@@ -1790,515 +2578,873 @@ a, button, input, textarea {
       <p>122 N. Huron Ave<br>Pierre, SD 57501</p>
     </div>
   </div>
+
   <div class="footer-bottom">
-    <p>&copy; 2024 Native Command Consulting. All rights reserved.</p>
-    <p>Designed with <span>purpose</span></p>
+    <p>&copy; 2024 Native Command Consulting, LLC. All rights reserved.</p>
+    <p>Designed with <span>purpose</span> and <span>pride</span></p>
   </div>
 </footer>
 
-<!-- BACK TO TOP -->
-<a href="#hero" class="back-to-top scramble-text" data-text="&uarr; TOP" id="backToTop">&uarr; TOP</a>
+<!-- ====================================================================
+     BACK TO TOP
+     ==================================================================== -->
+<a href="#hero" class="back-to-top scramble-text" data-text="&uarr; TOP" id="backToTop" aria-label="Back to top">&uarr; TOP</a>
 
-<!-- ================================================================
-     JAVASCRIPT — THE ENGINE
-     ================================================================ -->
+
+<!-- ====================================================================
+     JAVASCRIPT ENGINE
+     ==================================================================== -->
 <script>
-(function() {
+(function () {
   'use strict';
 
-  /* ==================================================================
-     UTILITIES
-     ================================================================== */
-  const $ = (sel, ctx) => (ctx || document).querySelector(sel);
-  const $$ = (sel, ctx) => [...(ctx || document).querySelectorAll(sel)];
-  const lerp = (a, b, t) => a + (b - a) * t;
-  const clamp = (val, min, max) => Math.min(Math.max(val, min), max);
-  const isMobile = () => window.innerWidth <= 768;
+  /* ====================================================================
+     UTILITY FUNCTIONS
+     ==================================================================== */
 
-  /* ==================================================================
+  /**
+   * Query selector shorthand
+   */
+  function $(selector, context) {
+    return (context || document).querySelector(selector);
+  }
+
+  /**
+   * Query selector all, returns array
+   */
+  function $$(selector, context) {
+    return Array.from((context || document).querySelectorAll(selector));
+  }
+
+  /**
+   * Linear interpolation
+   */
+  function lerp(start, end, factor) {
+    return start + (end - start) * factor;
+  }
+
+  /**
+   * Clamp a value between min and max
+   */
+  function clamp(value, min, max) {
+    return Math.min(Math.max(value, min), max);
+  }
+
+  /**
+   * Check if viewport is mobile width
+   */
+  function isMobile() {
+    return window.innerWidth <= 768;
+  }
+
+  /**
+   * Debounce utility
+   */
+  function debounce(func, wait) {
+    var timeout;
+    return function () {
+      var context = this;
+      var args = arguments;
+      clearTimeout(timeout);
+      timeout = setTimeout(function () {
+        func.apply(context, args);
+      }, wait);
+    };
+  }
+
+  /**
+   * Check if element is in viewport
+   */
+  function isInViewport(el, threshold) {
+    threshold = threshold || 0;
+    var rect = el.getBoundingClientRect();
+    var vh = window.innerHeight;
+    return rect.top < vh * (1 - threshold) && rect.bottom > vh * threshold;
+  }
+
+
+  /* ====================================================================
+     STATE VARIABLES
+     ==================================================================== */
+  var scrollY = 0;
+  var lastScrollY = 0;
+  var scrollVelocity = 0;
+  var scrollVelocitySmooth = 0;
+  var isScrolling = false;
+  var scrollTimeout = null;
+  var pageLoaded = false;
+
+
+  /* ====================================================================
      LOADING SEQUENCE
-     ================================================================== */
-  const loader = $('#loader');
-  const loaderLine = $('#loaderLine');
-  const nav = $('#nav');
+     ==================================================================== */
+  var loader = $('#loader');
+  var loaderLine = $('#loaderLine');
+  var loaderText = $('#loaderText');
+  var nav = $('#nav');
 
-  function startLoadSequence() {
-    // Phase 1: red line draws
-    setTimeout(() => loaderLine.classList.add('animate'), 100);
+  function initLoader() {
+    // Phase 1: Show text, begin line draw
+    setTimeout(function () {
+      loaderText.classList.add('show');
+    }, 100);
 
-    // Phase 2: split open
-    setTimeout(() => {
+    setTimeout(function () {
+      loaderLine.classList.add('animate');
+    }, 200);
+
+    // Phase 2: Split screen open
+    setTimeout(function () {
       loader.classList.add('done');
-      // Phase 3: reveal hero + nav
-      setTimeout(() => {
+      loaderText.style.opacity = '0';
+
+      // Phase 3: Reveal page content
+      setTimeout(function () {
         loader.classList.add('hidden');
         nav.classList.add('visible');
+        pageLoaded = true;
         revealHero();
-      }, 800);
-    }, 1400);
+      }, 900);
+    }, 1600);
   }
 
-  // Handle case where load already fired before script runs
+  // Start loading — handle case where load already fired before script runs
   if (document.readyState === 'complete') {
-    startLoadSequence();
+    initLoader();
   } else {
-    window.addEventListener('load', startLoadSequence);
+    window.addEventListener('load', initLoader);
   }
 
-  /* ==================================================================
-     HERO — KINETIC TYPOGRAPHY REVEAL
-     ================================================================== */
+
+  /* ====================================================================
+     HERO - KINETIC TYPOGRAPHY REVEAL
+     ==================================================================== */
+  var heroNative = $('#heroNative');
+  var heroCommand = $('#heroCommand');
+
+  /**
+   * Build individual character spans for a word inside a container
+   */
   function buildHeroWord(container, word) {
-    word.split('').forEach((char, i) => {
-      const span = document.createElement('span');
+    var chars = word.split('');
+    chars.forEach(function (char, index) {
+      var span = document.createElement('span');
       span.className = 'hero-char';
       span.textContent = char;
-      span.style.transitionDelay = (i * 0.06) + 's';
+      // Stagger: each character gets a progressively longer delay
+      span.style.transitionDelay = (index * 0.065) + 's';
       container.appendChild(span);
     });
   }
 
-  const heroNative = $('#heroNative');
-  const heroCommand = $('#heroCommand');
+  // Build the hero words on DOM ready
   buildHeroWord(heroNative, 'NATIVE');
   buildHeroWord(heroCommand, 'COMMAND');
 
+  /**
+   * Trigger the hero reveal animation
+   */
   function revealHero() {
-    const chars = $$('.hero-char');
-    // Staggered reveal
-    requestAnimationFrame(() => {
-      chars.forEach(c => c.classList.add('revealed'));
+    var allChars = $$('.hero-char');
+
+    // Use rAF to ensure the transition actually triggers
+    requestAnimationFrame(function () {
+      allChars.forEach(function (charEl) {
+        charEl.classList.add('revealed');
+      });
     });
-    // Subtitle
-    setTimeout(() => {
-      $('#heroSubtitle').classList.add('revealed');
-    }, 400);
+
+    // Reveal subtitle with delay
+    setTimeout(function () {
+      var subtitle = $('#heroSubtitle');
+      if (subtitle) {
+        subtitle.classList.add('revealed');
+      }
+    }, 500);
+
+    // Reveal tagline with further delay
+    setTimeout(function () {
+      var tagline = $('#heroTagline');
+      if (tagline) {
+        tagline.classList.add('revealed');
+      }
+    }, 650);
   }
 
-  /* ==================================================================
-     CUSTOM CURSOR
-     ================================================================== */
-  if (!isMobile()) {
-    const cursor = $('#cursor');
-    let cursorX = -100, cursorY = -100;
-    let targetX = -100, targetY = -100;
 
-    document.addEventListener('mousemove', e => {
-      targetX = e.clientX;
-      targetY = e.clientY;
+  /* ====================================================================
+     CUSTOM CURSOR
+     ==================================================================== */
+  var cursor = $('#cursor');
+  var cursorX = -100;
+  var cursorY = -100;
+  var targetCursorX = -100;
+  var targetCursorY = -100;
+  var cursorVisible = false;
+
+  if (!isMobile()) {
+    // Track mouse position
+    document.addEventListener('mousemove', function (e) {
+      targetCursorX = e.clientX;
+      targetCursorY = e.clientY;
+
+      if (!cursorVisible) {
+        cursorVisible = true;
+        cursor.classList.add('active');
+      }
     });
 
-    // Expand on interactive elements
-    const interactiveSelectors = 'a, button, input, textarea, select, [data-tilt], .scramble-text';
-    document.addEventListener('mouseover', e => {
-      if (e.target.closest(interactiveSelectors)) {
+    // Hide cursor when leaving window
+    document.addEventListener('mouseleave', function () {
+      cursorVisible = false;
+      cursor.classList.remove('active');
+    });
+
+    document.addEventListener('mouseenter', function () {
+      cursorVisible = true;
+      cursor.classList.add('active');
+    });
+
+    // Expand cursor on interactive elements
+    var interactiveSelector = 'a, button, input, textarea, select, [data-tilt], .scramble-text, .service-tag';
+
+    document.addEventListener('mouseover', function (e) {
+      if (e.target.closest(interactiveSelector)) {
         cursor.classList.add('expanded');
       }
     });
-    document.addEventListener('mouseout', e => {
-      if (e.target.closest(interactiveSelectors)) {
+
+    document.addEventListener('mouseout', function (e) {
+      if (e.target.closest(interactiveSelector)) {
         cursor.classList.remove('expanded');
       }
     });
 
+    // Click shrink
+    document.addEventListener('mousedown', function () {
+      cursor.classList.add('clicking');
+    });
+
+    document.addEventListener('mouseup', function () {
+      cursor.classList.remove('clicking');
+    });
+
+    /**
+     * Smooth cursor animation loop
+     */
     function animateCursor() {
-      cursorX = lerp(cursorX, targetX, 0.15);
-      cursorY = lerp(cursorY, targetY, 0.15);
-      cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
+      cursorX = lerp(cursorX, targetCursorX, 0.12);
+      cursorY = lerp(cursorY, targetCursorY, 0.12);
+      cursor.style.transform = 'translate3d(' + cursorX + 'px, ' + cursorY + 'px, 0)';
       requestAnimationFrame(animateCursor);
     }
+
     animateCursor();
   }
 
-  /* ==================================================================
+
+  /* ====================================================================
      PROGRESS BAR
-     ================================================================== */
-  const progressBar = $('#progressBar');
+     ==================================================================== */
+  var progressBar = $('#progressBar');
 
   function updateProgress() {
-    const scrollTop = window.scrollY;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const progress = docHeight > 0 ? scrollTop / docHeight : 0;
-    progressBar.style.transform = `scaleX(${progress})`;
+    var scrollTop = window.scrollY || window.pageYOffset;
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    var progress = docHeight > 0 ? scrollTop / docHeight : 0;
+    progressBar.style.transform = 'scaleX(' + clamp(progress, 0, 1) + ')';
   }
 
-  /* ==================================================================
+
+  /* ====================================================================
      SCROLL VELOCITY TRACKING
-     ================================================================== */
-  let scrollY = 0;
-  let lastScrollY = 0;
-  let scrollVelocity = 0;
-  let scrollVelocitySmooth = 0;
-
-  function trackScroll() {
-    scrollY = window.scrollY;
+     ==================================================================== */
+  function trackScrollVelocity() {
+    scrollY = window.scrollY || window.pageYOffset;
     scrollVelocity = Math.abs(scrollY - lastScrollY);
-    scrollVelocitySmooth = lerp(scrollVelocitySmooth, scrollVelocity, 0.1);
+    scrollVelocitySmooth = lerp(scrollVelocitySmooth, scrollVelocity, 0.08);
     lastScrollY = scrollY;
+
+    // Track if user is actively scrolling
+    isScrolling = true;
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(function () {
+      isScrolling = false;
+    }, 150);
   }
 
-  /* ==================================================================
-     SCROLL-SPEED-RESPONSIVE STRETCH
-     ================================================================== */
-  const stretchElements = $$('.stretch-element');
 
-  function applyStretch() {
+  /* ====================================================================
+     SCROLL-SPEED-RESPONSIVE STRETCH
+     ==================================================================== */
+  var stretchElements = $$('.stretch-element');
+
+  function applyScrollStretch() {
     if (isMobile()) return;
-    const factor = 1 + clamp(scrollVelocitySmooth * 0.003, 0, 0.2);
-    stretchElements.forEach(el => {
-      el.style.transform = `scaleX(${factor})`;
+
+    // Map velocity to a scale factor: faster scroll = more stretch
+    var stretchFactor = 1 + clamp(scrollVelocitySmooth * 0.004, 0, 0.2);
+
+    stretchElements.forEach(function (el) {
+      if (isInViewport(el)) {
+        el.style.transform = 'scaleX(' + stretchFactor + ')';
+      }
     });
   }
 
-  /* ==================================================================
+
+  /* ====================================================================
      TEXT SCRAMBLE EFFECT
-     ================================================================== */
-  const scrambleChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*';
+     ==================================================================== */
+  var SCRAMBLE_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&*<>';
+  var SCRAMBLE_SPEED = 30; // ms per frame
+  var SCRAMBLE_ITERATIONS_PER_CHAR = 3;
 
+  /**
+   * Scramble text effect on a single element
+   */
   function scrambleText(element) {
-    const original = element.getAttribute('data-text') || element.textContent;
-    const length = original.length;
-    let iterations = 0;
-    const maxIterations = length * 3;
+    var originalText = element.getAttribute('data-text') || element.textContent;
+    var length = originalText.length;
+    var iteration = 0;
+    var maxIterations = length * SCRAMBLE_ITERATIONS_PER_CHAR;
 
-    // Mark as scrambling for monospace font
+    // Apply monospace font during scramble
     element.classList.add('scrambling');
 
-    if (element._scrambleInterval) clearInterval(element._scrambleInterval);
+    // Clear any existing interval
+    if (element._scrambleInterval) {
+      clearInterval(element._scrambleInterval);
+    }
 
-    element._scrambleInterval = setInterval(() => {
-      let display = '';
-      for (let i = 0; i < length; i++) {
-        if (original[i] === ' ') {
+    element._scrambleInterval = setInterval(function () {
+      var display = '';
+      for (var i = 0; i < length; i++) {
+        if (originalText[i] === ' ') {
+          // Preserve spaces
           display += ' ';
-        } else if (i < iterations / 3) {
-          display += original[i];
+        } else if (i < iteration / SCRAMBLE_ITERATIONS_PER_CHAR) {
+          // Character already resolved
+          display += originalText[i];
         } else {
-          display += scrambleChars[Math.floor(Math.random() * scrambleChars.length)];
+          // Random character
+          display += SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
         }
       }
-      element.textContent = display;
-      iterations++;
 
-      if (iterations >= maxIterations) {
+      element.textContent = display;
+      iteration++;
+
+      // All characters resolved
+      if (iteration >= maxIterations) {
         clearInterval(element._scrambleInterval);
-        element.textContent = original;
+        element._scrambleInterval = null;
+        element.textContent = originalText;
         element.classList.remove('scrambling');
       }
-    }, 30);
+    }, SCRAMBLE_SPEED);
   }
 
-  // Attach scramble to all scramble-text elements
-  $$('.scramble-text').forEach(el => {
-    el.addEventListener('mouseenter', () => scrambleText(el));
+  // Attach scramble effect to all scramble-text elements
+  $$('.scramble-text').forEach(function (el) {
+    el.addEventListener('mouseenter', function () {
+      scrambleText(el);
+    });
   });
 
-  /* ==================================================================
-     SECTION REVEAL ON SCROLL (IntersectionObserver)
-     ================================================================== */
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        revealObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.15 });
 
-  $$('.reveal').forEach(el => revealObserver.observe(el));
-
-  /* ==================================================================
-     COUNTING ANIMATION FOR STATS
-     ================================================================== */
-  const statObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const el = entry.target;
-        const target = parseInt(el.getAttribute('data-count'));
-        let current = 0;
-        const duration = 1500;
-        const startTime = performance.now();
-
-        function tick(now) {
-          const elapsed = now - startTime;
-          const progress = Math.min(elapsed / duration, 1);
-          // Ease out cubic
-          const eased = 1 - Math.pow(1 - progress, 3);
-          current = Math.round(eased * target);
-          el.textContent = current + '+';
-          if (progress < 1) {
-            requestAnimationFrame(tick);
-          }
+  /* ====================================================================
+     SCROLL REVEAL (IntersectionObserver)
+     ==================================================================== */
+  var revealObserver = new IntersectionObserver(
+    function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
         }
-        requestAnimationFrame(tick);
-        statObserver.unobserve(el);
-      }
-    });
-  }, { threshold: 0.5 });
+      });
+    },
+    {
+      threshold: 0.12,
+      rootMargin: '0px 0px -50px 0px'
+    }
+  );
 
-  $$('[data-count]').forEach(el => statObserver.observe(el));
+  // Observe all reveal elements
+  $$('.reveal, .reveal-left, .reveal-scale').forEach(function (el) {
+    revealObserver.observe(el);
+  });
 
-  /* ==================================================================
+
+  /* ====================================================================
+     COUNTING ANIMATION FOR STATS
+     ==================================================================== */
+  var statObserver = new IntersectionObserver(
+    function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var el = entry.target;
+          var targetValue = parseInt(el.getAttribute('data-count'), 10);
+          var duration = 1800;
+          var startTime = null;
+
+          function tick(timestamp) {
+            if (!startTime) startTime = timestamp;
+            var elapsed = timestamp - startTime;
+            var progress = Math.min(elapsed / duration, 1);
+
+            // Ease-out cubic
+            var eased = 1 - Math.pow(1 - progress, 3);
+            var current = Math.round(eased * targetValue);
+            el.textContent = current + '+';
+
+            if (progress < 1) {
+              requestAnimationFrame(tick);
+            }
+          }
+
+          requestAnimationFrame(tick);
+          statObserver.unobserve(el);
+        }
+      });
+    },
+    { threshold: 0.5 }
+  );
+
+  $$('[data-count]').forEach(function (el) {
+    statObserver.observe(el);
+  });
+
+
+  /* ====================================================================
      SECTION TRANSITIONS (Fill on scroll)
-     ================================================================== */
-  const transitions = $$('[data-transition]');
+     ==================================================================== */
+  var transitions = $$('[data-transition]');
 
-  function updateTransitions() {
-    transitions.forEach(el => {
-      const rect = el.getBoundingClientRect();
-      const vh = window.innerHeight;
-      // Element starts entering from bottom, fully visible at center
-      const progress = clamp(1 - (rect.top / (vh * 0.7)), 0, 1);
-      const fill = el.querySelector('.section-transition-fill');
+  function updateSectionTransitions() {
+    var vh = window.innerHeight;
+
+    transitions.forEach(function (el) {
+      var rect = el.getBoundingClientRect();
+      // Start filling when element enters bottom 70% of viewport
+      var progress = clamp(1 - (rect.top / (vh * 0.7)), 0, 1);
+      var fill = el.querySelector('.section-transition-fill');
       if (fill) {
-        fill.style.transform = `scaleX(${progress})`;
+        fill.style.transform = 'scaleX(' + progress + ')';
       }
     });
   }
 
-  /* ==================================================================
-     HORIZONTAL SCROLL SERVICES
-     ================================================================== */
-  const servicesWrapper = $('#services');
-  const servicesTrack = $('#servicesTrack');
-  const servicePanels = $$('.service-panel');
-  const numPanels = servicePanels.length;
 
+  /* ====================================================================
+     HORIZONTAL SCROLL SERVICES
+     ==================================================================== */
+  var servicesWrapper = $('#services');
+  var servicesTrack = $('#servicesTrack');
+  var servicePanels = $$('.service-panel');
+  var numPanels = servicePanels.length;
+  var progressDots = $$('.services-progress-dot');
+
+  /**
+   * Set the height of the services wrapper to create scroll room
+   */
   function setupHorizontalScroll() {
     if (isMobile()) {
       servicesWrapper.style.height = 'auto';
       return;
     }
-    // Set wrapper height to create scroll room
-    const totalWidth = numPanels * window.innerWidth;
-    servicesWrapper.style.height = totalWidth + 'px';
+    // Height = number of panels * viewport width (creates horizontal scroll space)
+    var totalScrollHeight = numPanels * window.innerWidth;
+    servicesWrapper.style.height = totalScrollHeight + 'px';
   }
 
+  /**
+   * Update horizontal scroll position based on vertical scroll
+   */
   function updateHorizontalScroll() {
     if (isMobile()) {
       servicesTrack.style.transform = 'none';
       return;
     }
 
-    const wrapperRect = servicesWrapper.getBoundingClientRect();
-    const wrapperTop = wrapperRect.top;
-    const wrapperHeight = servicesWrapper.offsetHeight;
-    const viewportH = window.innerHeight;
-    const scrollRange = wrapperHeight - viewportH;
+    var wrapperRect = servicesWrapper.getBoundingClientRect();
+    var wrapperTop = wrapperRect.top;
+    var wrapperHeight = servicesWrapper.offsetHeight;
+    var viewportH = window.innerHeight;
+    var scrollRange = wrapperHeight - viewportH;
+
+    if (scrollRange <= 0) return;
+
+    var maxTranslate = (numPanels - 1) * window.innerWidth;
 
     if (wrapperTop <= 0 && wrapperTop >= -scrollRange) {
-      const progress = Math.abs(wrapperTop) / scrollRange;
-      const maxTranslate = (numPanels - 1) * window.innerWidth;
-      const translateX = progress * maxTranslate;
-      servicesTrack.style.transform = `translateX(-${translateX}px)`;
+      // We're inside the scroll zone
+      var progress = Math.abs(wrapperTop) / scrollRange;
+      var translateX = progress * maxTranslate;
+      servicesTrack.style.transform = 'translateX(' + (-translateX) + 'px)';
+
+      // Update progress dots
+      var activePanel = Math.round(progress * (numPanels - 1));
+      progressDots.forEach(function (dot, index) {
+        if (index === activePanel) {
+          dot.classList.add('active');
+        } else {
+          dot.classList.remove('active');
+        }
+      });
     } else if (wrapperTop > 0) {
+      // Before the section
       servicesTrack.style.transform = 'translateX(0)';
+      progressDots.forEach(function (dot, i) {
+        dot.classList.toggle('active', i === 0);
+      });
     } else {
-      const maxTranslate = (numPanels - 1) * window.innerWidth;
-      servicesTrack.style.transform = `translateX(-${maxTranslate}px)`;
+      // After the section
+      servicesTrack.style.transform = 'translateX(' + (-maxTranslate) + 'px)';
+      progressDots.forEach(function (dot, i) {
+        dot.classList.toggle('active', i === numPanels - 1);
+      });
     }
   }
 
   setupHorizontalScroll();
-  window.addEventListener('resize', setupHorizontalScroll);
 
-  /* ==================================================================
+
+  /* ====================================================================
      3D TILT CARDS
-     ================================================================== */
+     ==================================================================== */
   if (!isMobile()) {
-    $$('[data-tilt]').forEach(card => {
-      const shine = card.querySelector('.tilt-card-shine');
+    $$('[data-tilt]').forEach(function (card) {
+      var shine = card.querySelector('.tilt-card-shine');
+      var isHovering = false;
 
-      card.addEventListener('mousemove', e => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
+      card.addEventListener('mouseenter', function () {
+        isHovering = true;
+        // Remove transition for smooth tracking
+        card.style.transition = 'none';
+      });
 
-        const rotateX = ((y - centerY) / centerY) * -8;
-        const rotateY = ((x - centerX) / centerX) * 8;
+      card.addEventListener('mousemove', function (e) {
+        if (!isHovering) return;
 
-        card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+        var rect = card.getBoundingClientRect();
+        var x = e.clientX - rect.left;
+        var y = e.clientY - rect.top;
+        var centerX = rect.width / 2;
+        var centerY = rect.height / 2;
 
+        // Calculate rotation based on cursor offset from center
+        var rotateX = ((y - centerY) / centerY) * -8;
+        var rotateY = ((x - centerX) / centerX) * 8;
+
+        card.style.transform = 'perspective(800px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) scale3d(1.02, 1.02, 1.02)';
+
+        // Move the shine gradient to follow cursor
         if (shine) {
-          shine.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.12) 0%, transparent 60%)`;
+          shine.style.background = 'radial-gradient(circle at ' + x + 'px ' + y + 'px, rgba(255,255,255,0.1) 0%, transparent 60%)';
         }
       });
 
-      card.addEventListener('mouseleave', () => {
-        card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+      card.addEventListener('mouseleave', function () {
+        isHovering = false;
+        // Spring back with bouncy ease
         card.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
-        setTimeout(() => { card.style.transition = ''; }, 600);
-      });
+        card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
 
-      card.addEventListener('mouseenter', () => {
-        card.style.transition = '';
+        if (shine) {
+          shine.style.background = 'radial-gradient(circle at 50% 50%, rgba(255,255,255,0.06) 0%, transparent 60%)';
+        }
       });
     });
   }
 
-  /* ==================================================================
+
+  /* ====================================================================
      MARQUEE WITH SCROLL-VELOCITY COUPLING
-     ================================================================== */
-  const marquee1 = $('#marquee1');
-  const marquee2 = $('#marquee2');
-  let marquee1Pos = 0;
-  let marquee2Pos = 0;
+     ==================================================================== */
+  var marquee1 = $('#marquee1');
+  var marquee2 = $('#marquee2');
+  var marquee1Pos = 0;
+  var marquee2Pos = 0;
+  var marquee1Half = 0;
+  var marquee2Half = 0;
 
-  function getHalfWidth(track) {
-    return track.scrollWidth / 2;
+  /**
+   * Calculate half-width of each marquee track (for seamless looping)
+   */
+  function calculateMarqueeWidths() {
+    if (marquee1) marquee1Half = marquee1.scrollWidth / 2;
+    if (marquee2) marquee2Half = marquee2.scrollWidth / 2;
   }
 
+  // Calculate initially and on resize
+  calculateMarqueeWidths();
+
+  /**
+   * Animate marquee tracks
+   */
   function updateMarquee() {
-    const baseSpeed1 = 0.5;
-    const baseSpeed2 = 0.35;
-    const velocityMultiplier = 1 + scrollVelocitySmooth * 0.15;
+    if (!marquee1 || !marquee2) return;
 
-    const speed1 = baseSpeed1 * velocityMultiplier;
-    const speed2 = baseSpeed2 * velocityMultiplier;
+    // Base speeds
+    var baseSpeed1 = 0.5;
+    var baseSpeed2 = 0.35;
 
-    const half1 = getHalfWidth(marquee1);
-    const half2 = getHalfWidth(marquee2);
+    // Multiply by scroll velocity (faster scrolling = faster marquee)
+    var velocityBoost = 1 + scrollVelocitySmooth * 0.12;
+    var speed1 = baseSpeed1 * velocityBoost;
+    var speed2 = baseSpeed2 * velocityBoost;
 
-    // Row 1: scroll left
+    // Row 1: moves left
     marquee1Pos -= speed1;
-    if (Math.abs(marquee1Pos) >= half1) {
-      marquee1Pos = 0;
+    if (Math.abs(marquee1Pos) >= marquee1Half) {
+      marquee1Pos += marquee1Half;
     }
-    marquee1.style.transform = `translateX(${marquee1Pos}px)`;
+    marquee1.style.transform = 'translateX(' + marquee1Pos + 'px)';
 
-    // Row 2: scroll right
+    // Row 2: moves right (starts offset)
     marquee2Pos += speed2;
-    if (marquee2Pos >= half2) {
-      marquee2Pos = 0;
+    if (marquee2Pos >= 0) {
+      marquee2Pos -= marquee2Half;
     }
-    marquee2.style.transform = `translateX(${marquee2Pos - half2}px)`;
+    marquee2.style.transform = 'translateX(' + marquee2Pos + 'px)';
   }
 
-  /* ==================================================================
-     BACK TO TOP
-     ================================================================== */
-  const backToTop = $('#backToTop');
+  // Initialize marquee2 position (start from negative half)
+  marquee2Pos = -marquee2Half;
+
+
+  /* ====================================================================
+     BACK TO TOP BUTTON
+     ==================================================================== */
+  var backToTop = $('#backToTop');
 
   function updateBackToTop() {
-    if (window.scrollY > window.innerHeight) {
+    var threshold = window.innerHeight;
+    var currentScroll = window.scrollY || window.pageYOffset;
+
+    if (currentScroll > threshold) {
       backToTop.classList.add('visible');
     } else {
       backToTop.classList.remove('visible');
     }
   }
 
-  /* ==================================================================
-     SMOOTH SCROLL FOR NAV LINKS
-     ================================================================== */
-  $$('a[href^="#"]').forEach(link => {
-    link.addEventListener('click', e => {
+
+  /* ====================================================================
+     SMOOTH SCROLL FOR ANCHOR LINKS
+     ==================================================================== */
+  var mobileMenu = $('#mobileMenu');
+  var navBurger = $('#navBurger');
+
+  $$('a[href^="#"]').forEach(function (link) {
+    link.addEventListener('click', function (e) {
       e.preventDefault();
-      const targetId = link.getAttribute('href');
-      const target = $(targetId);
-      if (target) {
-        const offsetTop = target.getBoundingClientRect().top + window.scrollY;
-        window.scrollTo({
-          top: offsetTop,
-          behavior: 'smooth'
-        });
-        // Close mobile menu if open
-        if (mobileMenu.classList.contains('open')) {
-          mobileMenu.classList.remove('open');
-          navBurger.classList.remove('active');
-        }
+
+      var targetId = link.getAttribute('href');
+      if (!targetId || targetId === '#') return;
+
+      var targetEl = $(targetId);
+      if (!targetEl) return;
+
+      // Calculate target scroll position
+      var offsetTop = targetEl.getBoundingClientRect().top + (window.scrollY || window.pageYOffset);
+
+      // Perform smooth scroll
+      window.scrollTo({
+        top: offsetTop,
+        behavior: 'smooth'
+      });
+
+      // Close mobile menu if it's open
+      if (mobileMenu && mobileMenu.classList.contains('open')) {
+        closeMobileMenu();
       }
     });
   });
 
-  /* ==================================================================
+
+  /* ====================================================================
      MOBILE MENU
-     ================================================================== */
-  const navBurger = $('#navBurger');
-  const mobileMenu = $('#mobileMenu');
-
-  navBurger.addEventListener('click', () => {
-    navBurger.classList.toggle('active');
-    mobileMenu.classList.toggle('open');
-  });
-
-  /* ==================================================================
-     FORM VALIDATION
-     ================================================================== */
-  const contactForm = $('#contactForm');
-  const formSuccess = $('#formSuccess');
-
-  function validateEmail(email) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+     ==================================================================== */
+  function openMobileMenu() {
+    navBurger.classList.add('active');
+    navBurger.setAttribute('aria-expanded', 'true');
+    mobileMenu.classList.add('open');
+    document.body.style.overflow = 'hidden';
   }
 
-  contactForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    let valid = true;
+  function closeMobileMenu() {
+    navBurger.classList.remove('active');
+    navBurger.setAttribute('aria-expanded', 'false');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+  }
 
-    // Reset errors
-    $$('.form-group', contactForm).forEach(g => g.classList.remove('error'));
-
-    const name = $('#formName');
-    const email = $('#formEmail');
-    const message = $('#formMessage');
-
-    if (!name.value.trim()) {
-      name.closest('.form-group').classList.add('error');
-      valid = false;
-    }
-
-    if (!email.value.trim() || !validateEmail(email.value.trim())) {
-      email.closest('.form-group').classList.add('error');
-      valid = false;
-    }
-
-    if (!message.value.trim()) {
-      message.closest('.form-group').classList.add('error');
-      valid = false;
-    }
-
-    if (valid) {
-      formSuccess.classList.add('show');
-      contactForm.reset();
-      // Re-scramble submit button text
-      const btn = contactForm.querySelector('.submit-btn');
-      scrambleText(btn);
-      setTimeout(() => {
-        formSuccess.classList.remove('show');
-      }, 5000);
+  navBurger.addEventListener('click', function () {
+    if (mobileMenu.classList.contains('open')) {
+      closeMobileMenu();
+    } else {
+      openMobileMenu();
     }
   });
 
-  /* ==================================================================
+  // Close menu on Escape key
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
+      closeMobileMenu();
+    }
+  });
+
+
+  /* ====================================================================
+     FORM VALIDATION
+     ==================================================================== */
+  var contactForm = $('#contactForm');
+  var formSuccess = $('#formSuccess');
+
+  /**
+   * Validate an email address format
+   */
+  function isValidEmail(email) {
+    var pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return pattern.test(email);
+  }
+
+  /**
+   * Show error on a form group
+   */
+  function showFieldError(field) {
+    var group = field.closest('.form-group');
+    if (group) {
+      group.classList.add('error');
+    }
+  }
+
+  /**
+   * Clear error on a form group
+   */
+  function clearFieldError(field) {
+    var group = field.closest('.form-group');
+    if (group) {
+      group.classList.remove('error');
+    }
+  }
+
+  // Clear errors on input
+  $$('#contactForm input, #contactForm textarea').forEach(function (field) {
+    field.addEventListener('input', function () {
+      clearFieldError(field);
+    });
+  });
+
+  contactForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    var isValid = true;
+
+    // Clear all previous errors
+    $$('.form-group', contactForm).forEach(function (group) {
+      group.classList.remove('error');
+    });
+
+    // Validate name
+    var nameField = $('#formName');
+    if (!nameField.value.trim()) {
+      showFieldError(nameField);
+      isValid = false;
+    }
+
+    // Validate email
+    var emailField = $('#formEmail');
+    if (!emailField.value.trim() || !isValidEmail(emailField.value.trim())) {
+      showFieldError(emailField);
+      isValid = false;
+    }
+
+    // Validate message
+    var messageField = $('#formMessage');
+    if (!messageField.value.trim()) {
+      showFieldError(messageField);
+      isValid = false;
+    }
+
+    if (isValid) {
+      // Show success message
+      formSuccess.classList.add('show');
+
+      // Scramble the button text as feedback
+      var submitBtn = contactForm.querySelector('.submit-btn');
+      if (submitBtn) {
+        scrambleText(submitBtn);
+      }
+
+      // Reset form
+      contactForm.reset();
+
+      // Hide success after 6 seconds
+      setTimeout(function () {
+        formSuccess.classList.remove('show');
+      }, 6000);
+    } else {
+      // Focus first error field
+      var firstError = contactForm.querySelector('.form-group.error input, .form-group.error textarea');
+      if (firstError) {
+        firstError.focus();
+      }
+    }
+  });
+
+
+  /* ====================================================================
      MAIN ANIMATION LOOP
-     ================================================================== */
+     ==================================================================== */
+  var rafId = null;
+
   function mainLoop() {
-    trackScroll();
+    trackScrollVelocity();
     updateProgress();
-    applyStretch();
-    updateTransitions();
+    applyScrollStretch();
+    updateSectionTransitions();
     updateHorizontalScroll();
     updateMarquee();
     updateBackToTop();
-    requestAnimationFrame(mainLoop);
+
+    rafId = requestAnimationFrame(mainLoop);
   }
 
-  requestAnimationFrame(mainLoop);
+  // Start the loop
+  rafId = requestAnimationFrame(mainLoop);
 
-  /* ==================================================================
+
+  /* ====================================================================
      RESIZE HANDLER
-     ================================================================== */
-  let resizeTimeout;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
-      setupHorizontalScroll();
-    }, 200);
+     ==================================================================== */
+  var handleResize = debounce(function () {
+    setupHorizontalScroll();
+    calculateMarqueeWidths();
+  }, 250);
+
+  window.addEventListener('resize', handleResize);
+
+
+  /* ====================================================================
+     KEYBOARD ACCESSIBILITY
+     ==================================================================== */
+  // Allow keyboard focus to show a visual indicator
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Tab') {
+      document.body.classList.add('keyboard-nav');
+    }
+  });
+
+  document.addEventListener('mousedown', function () {
+    document.body.classList.remove('keyboard-nav');
   });
 
 })();
 </script>
+
 </body>
 </html>
